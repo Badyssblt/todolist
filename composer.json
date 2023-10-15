@@ -1,0 +1,19 @@
+{
+    "name": "miro/todo",
+    "description": "Une todo list en POO",
+    "autoload": {
+        "psr-4": {
+            "Class\\": "Class/",
+            "Router\\": "Router/",
+            "Controllers\\": "Controllers/",
+            "Source\\" : "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Miro",
+            "email": "badyss.blt@gmail.com"
+        }
+    ],
+    "require": {}
+}
