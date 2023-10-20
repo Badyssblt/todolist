@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+:root{
+    --text-color: #0077b6;
+    --border: 10px;
+    --background-color: #e9ecef;
+    --font-menu: Poppins;
+    --font-todo: Roboto;
+}
+
+
+
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style-type: none;
+}

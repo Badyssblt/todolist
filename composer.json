@@ -1,0 +1,17 @@
+{
+    "name": "badys/blog",
+    "autoload": {
+        "psr-4": {
+            "Badys\\Blog\\": "src/",
+            "Controllers\\": "src/Controllers/",
+            "Models\\": "src/Models/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Mirooyo",
+            "email": "badtruc@gmail.com"
+        }
+    ],
+    "require": {}
+}
