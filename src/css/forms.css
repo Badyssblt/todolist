@@ -1,0 +1,38 @@
+.form {
+    z-index: 30;
+    width: 400px;
+    height: 500px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--background-calendar);
+    padding: 10px;
+  }
+  
+input {
+    border-bottom: 1px solid grey;
+    padding: 10px;
+    outline: none;
+    border: none;
+    color: var(--text-color);
+    font-family: Poppins;
+    background: white;
+    border-radius: 5px;
+}
+  
+input::placeholder{
+    color: rgba(0, 0, 0, .7);
+  }
+
+.form__hour {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    font-family: Poppins;
+    color: white;
+}
+
+.form__hour__content {
+    font-weight: bold;
+}

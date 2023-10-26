@@ -4,8 +4,19 @@ main {
     min-height: 100vh;
     display: grid;
     grid-template-columns: 20% 50% 30%;
-    gap: 20px;
     background: var(--background-color);
+}
+
+aside {
+    background: white;
+}
+
+.hidden {
+    display: none;
+}
+
+.fas {
+    text-align: center;
 }
 
 .menu {
@@ -20,55 +31,19 @@ main {
     align-items: center;
     font-family: var(--font-menu);
     font-weight: 700;
+    transition: all .2s ease-in-out;
 }
 
 .items:hover {
     cursor: pointer;
     color: var(--text-color);
-    transition: all .2s ease-in-out;
+    transform: scale(1.1);
+
 }
 
-i {
+li > i {
     padding-right: 10px;
 }
 
-.todo__wrapper {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
 
-.todo__items {
-    display: grid;
-    grid-template-columns: 10% 85% 5%;
-    padding: 10px;
-    border-radius: var(--border);
-    font-family: var(--font-todo);
-    border: 1px solid darkgray;
-}
 
-.todo__name {
-    align-self: center;
-}
-
-.btn__check {
-    align-self: center;
-    padding: 0;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: none;
-    border: none;
-    outline: none;
-}
-
-.uncheck {
-    border: 1px solid var(--text-color);
-    transition: all .2s ease-in-out;
-    cursor: pointer;
-}
-
-.uncheck:hover{
-    background: var(--text-color);
-}

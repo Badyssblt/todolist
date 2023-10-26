@@ -55,8 +55,16 @@ $(document).ready(function () {
   function createForm(date, hour) {
     let form = $("<form id='addTask' method='POST'></form>");
     let dateAndHour = date + "," + hour;
-    let dateAndHourDiv = $("<div><p>" + date + " " + hour + "</p></div>");
-    let dateAndHourInput = $("<input type='hidden' value=" + dateAndHour + ">");
+    let dateAndHourDiv = $(
+      "<div class='form__hour'><p>Date et jour de l'évenèment </p><p class='form__hour__content'>" +
+        date +
+        " " +
+        hour +
+        "</p></div>"
+    );
+    let dateAndHourInput = $(
+      "<input type='hidden' id='dateHidden' value=" + dateAndHour + ">"
+    );
     let inputs = {
       name: $(
         "<input type='text' placeholder='Entrer le nom de l évènement...' name='eventName' id='name'>"

@@ -27,7 +27,7 @@ class Database
         }
     }
 
-    public function getAll()
+    public function getAll(): array
     {
         $sql = "SELECT * FROM " . $this->table;
         $query = $this->connection->prepare($sql);
@@ -36,7 +36,7 @@ class Database
 
     }
 
-    public function getOne($id)
+    public function getOne($id): array
     {
         if (empty($this->table)) {
             throw new \Exception("Table name not set.");
@@ -80,7 +80,7 @@ class Database
     }
 
 
-    public function insert($data)
+    public function insert($data): void
     {
         if (empty($this->table)) {
             throw new \Exception("Table inconnue");
@@ -96,5 +96,29 @@ class Database
         $query->bindParam(':email', $data['email']);
 
         $query->execute();
+    }
+
+    public function edit($data, $id): void
+    {
+        if (empty($this->table)) {
+            throw new \Exception("Table inconnue");
+        }
+
+        $updateValues = '';
+        foreach ($data as $key => $value) {
+            $updateValues .= "$key=:$key, ";
+        }
+        $updateValues = rtrim($updateValues, ', ');
+
+        $sql = "UPDATE {$this->table} SET $updateValues WHERE id = :id";
+        $query = $this->connection->prepare($sql);
+
+        foreach ($data as $key => $value) {
+            $query->bindValue(':' . $key, $value);
+        }
+        $query->bindParam(':id', $id);
+
+        $query->execute();
+
     }
 }

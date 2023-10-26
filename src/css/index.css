@@ -4,12 +4,10 @@
     --text-color: #0077b6;
     --border: 10px;
     --background-color: #e9ecef;
+    --background-calendar: #002133;
     --font-menu: Poppins;
     --font-todo: Roboto;
 }
-
-
-
 
 body {
     margin: 0;

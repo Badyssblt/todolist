@@ -15,5 +15,13 @@ $path = $_SERVER["REQUEST_URI"];
 $router->addRoutes('/', [new homePage(), 'index']);
 $router->addRoutes('/register', [new Register(), 'index']);
 $router->addRoutes('/login', [new Login(), "index"]);
+
+
+// BACKEND
 $router->addRoutes('/postEvent', [new Post(), 'index']);
+$router->addRoutes('/checkEvent', [new Post(), "check"]);
+$router->addRoutes('/uncheckEvent', [new Post(), "uncheck"]);
+$router->addRoutes('/addCategory', [new Post(), "createCategory"]);
+$router->addRoutes('/getCategory', [new Post(), "getCategory"]);
+
 $router->handleRequest($path);
