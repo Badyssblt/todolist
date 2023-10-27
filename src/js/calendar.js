@@ -105,84 +105,133 @@
 //     createForm(currentDate, hour);
 //   }
 // });
+
 $(document).ready(function () {
-  $(document).ready(function () {
-    // Initialiser la date
-    let currentDate = new Date();
+  // Initialiser la date
+  let currentDate = new Date();
+
+  // Création du calendrier
+  updateCalendar();
+
+  // Ajout de la ligne pour l'heure actuelle
+  updateCurrentHourLine();
+
+  // Mettre à jour la ligne toutes les minutes
+  setInterval(updateCurrentHourLine, 60000);
+
+  // Bouton "Précédent"
+  $("#prev-day").on("click", function () {
+    currentDate.setDate(currentDate.getDate() - 1);
+    updateCalendar();
+  });
+
+  // Bouton "Suivant"
+  $("#next-day").on("click", function () {
+    currentDate.setDate(currentDate.getDate() + 1);
+    updateCalendar();
+  });
+
+  function updateCalendar() {
+    // Mettre à jour la date affichée
+    $("#selected-date").text(currentDate.toDateString());
+
+    // Vider les heures existantes
+    $("#hours").empty();
 
     // Création du calendrier
-    updateCalendar();
+    for (let hour = 0; hour <= 23; hour++) {
+      let event = $(
+        "<div class='events'><i class='fas fa-plus'></i></div>"
+      ).click(function () {
+        addEvent.call(this, hour);
+      });
+      $("#hours").append(
+        '<div class="hour" data-hour="' + hour + '">' + pad(hour) + ":00</div>",
+        event
+      );
+
+      let hourElement = $(
+        '<div class="hour" data-hour="' + hour + '">' + pad(hour) + ":00</div>"
+      );
+
+      hourElement.on("click", addEvent);
+    }
 
     // Ajout de la ligne pour l'heure actuelle
     updateCurrentHourLine();
+  }
 
-    // Mettre à jour la ligne toutes les minutes
-    setInterval(updateCurrentHourLine, 60000);
+  function updateCurrentHourLine() {
+    const currentHour = new Date().getHours();
+    const currentMinute = new Date().getMinutes();
+    const topPosition = ((currentHour * 60 + currentMinute) / 60) * 45; // 50px par heure
+    $(".current-hour-line").remove();
 
-    // Bouton "Précédent"
-    $("#prev-day").on("click", function () {
-      currentDate.setDate(currentDate.getDate() - 1);
-      updateCalendar();
-    });
-
-    // Bouton "Suivant"
-    $("#next-day").on("click", function () {
-      currentDate.setDate(currentDate.getDate() + 1);
-      updateCalendar();
-    });
-
-    function updateCalendar() {
-      // Mettre à jour la date affichée
-      $("#selected-date").text(currentDate.toDateString());
-
-      // Vider les heures existantes
-      $("#hours").empty();
-
-      // Création du calendrier
-      for (let hour = 0; hour <= 23; hour++) {
-        $("#hours").append(
-          '<div class="hour" data-hour="' +
-            hour +
-            '">' +
-            pad(hour) +
-            ":00</div>"
-        );
-        let hourElement = $(
-          '<div class="hour" data-hour="' +
-            hour +
-            '">' +
-            pad(hour) +
-            ":00</div>"
-        );
-      }
-
-      // Ajout de la ligne pour l'heure actuelle
-      updateCurrentHourLine();
+    if (currentDate.toDateString() === new Date().toDateString()) {
+      $('.hour[data-hour="' + currentHour + '"]').append(
+        '<div class="current-hour-line" style="top: ' +
+          topPosition +
+          'px; display: block"></div>'
+      );
+    } else {
+      $('.hour[data-hour="' + currentHour + '"]').append(
+        '<div class="current-hour-line" style="top: ' +
+          topPosition +
+          'px; display: none"></div>'
+      );
     }
+  }
 
-    function updateCurrentHourLine() {
-      const currentHour = new Date().getHours();
-      const currentMinute = new Date().getMinutes();
-      const topPosition = ((currentHour * 60 + currentMinute) / 60) * 45; // 50px par heure
-      $(".current-hour-line").remove();
-
-      if (currentDate.toDateString() === new Date().toDateString()) {
-        $('.hour[data-hour="' + currentHour + '"]').append(
-          '<div class="current-hour-line" style="top: ' +
-            topPosition +
-            'px; display: block"></div>'
-        );
-      } else {
-        $('.hour[data-hour="' + currentHour + '"]').append(
-          '<div class="current-hour-line" style="top: ' +
-            topPosition +
-            'px; display: none"></div>'
-        );
-      }
-    }
-
-    function pad(num) {
-      return (num < 10 ? "0" : "") + num;
-    }
-  });
+  function pad(num) {
+    return (num < 10 ? "0" : "") + num;
+  }
 });
+
+function addEvent() {
+  let hour = $(this).text(); // Utilisez $(this) pour obtenir le texte de l'heure cliquée
+  let currentDate = new Date();
+  currentDate = formatDate(currentDate);
+  console.log("clické");
+  createsForm(currentDate, hour);
+}
+
+function createsForm(date, hour) {
+  let form = $("<form id='addTask' method='POST'></form>");
+  let dateAndHour = date + "," + hour;
+  let dateAndHourDiv = $(
+    "<div class='form__hour'><p>Date et jour de l'évenèment </p><p class='form__hour__content'>" +
+      date +
+      " " +
+      hour +
+      "</p></div>"
+  );
+  let dateAndHourInput = $(
+    "<input type='hidden' id='dateHidden' value=" + dateAndHour + ">"
+  );
+  let inputs = {
+    name: $(
+      "<input type='text' placeholder='Entrer le nom de l évènement...' name='eventName' id='name'>"
+    ),
+    description: $("<textarea name='description' id='description'></textarea>"),
+    submit: $("<input type='submit'>"),
+  };
+  $(".form").css("display", "block");
+  $(".form").append(form);
+  form.append(inputs.name);
+  form.append(dateAndHourDiv);
+  form.append(dateAndHourInput);
+  form.append(inputs.description);
+  form.append(inputs.submit);
+}
+
+function formatDate(date) {
+  return [
+    padTo2Digits(date.getDate()),
+    padTo2Digits(date.getMonth() + 1),
+    date.getFullYear(),
+  ].join("/");
+}
+
+function padTo2Digits(num) {
+  return num.toString().padStart(2, "0");
+}
