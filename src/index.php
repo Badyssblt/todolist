@@ -1,25 +1,19 @@
 <?php
+use Controllers\Login;
+use Controllers\Register;
+use Controllers\homePage;
+use Controllers\Router\Router;
+use Controllers\Post;
 
-use Router\Router;
-use Exceptions\RouteNotFoundException;
+require("../vendor/autoload.php");
 
-require '../vendor/autoload.php';
-
-define("BASE_VIEW_PATH", dirname(__DIR__) . DIRECTORY_SEPARATOR . "Views" . DIRECTORY_SEPARATOR);
 
 $router = new Router();
 
-$router->register('/register', function () {
-    return "Register";
-});
+$path = $_SERVER["REQUEST_URI"];
 
-$router->register("/", ['Controllers\HomeControllers', "index"]);
-
-try {
-    echo $router->resolve($_SERVER["REQUEST_URI"]);
-} catch (RouteNotFoundException $e) {
-    echo $e;
-}
-
-
-?>
+$router->addRoutes('/', [new homePage(), 'index']);
+$router->addRoutes('/register', [new Register(), 'index']);
+$router->addRoutes('/login', [new Login(), "index"]);
+$router->addRoutes('/postEvent', [new Post(), 'index']);
+$router->handleRequest($path);

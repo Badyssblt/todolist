@@ -1,18 +1,16 @@
 {
-    "name": "miro/todo",
-    "description": "Une todo list en POO",
+    "name": "badys/blog",
     "autoload": {
         "psr-4": {
-            "Class\\": "Class/",
-            "Router\\": "Router/",
-            "Controllers\\": "Controllers/",
-            "Source\\" : "src/"
+            "Badys\\Blog\\": "src/",
+            "Controllers\\": "src/Controllers/",
+            "Models\\": "src/Models/"
         }
     },
     "authors": [
         {
-            "name": "Miro",
-            "email": "badyss.blt@gmail.com"
+            "name": "Mirooyo",
+            "email": "badtruc@gmail.com"
         }
     ],
     "require": {}
