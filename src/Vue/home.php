@@ -34,7 +34,9 @@
                 <button id="next-day" class="btn"><i class="fas fa-angle-right"></i></button>
             </div>
             <div id="hours">
+
             </div>
+
         </div>
     </main>
     <script src="https://kit.fontawesome.com/c1cb64b22b.js" crossorigin="anonymous"></script>

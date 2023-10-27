@@ -7,6 +7,7 @@
 }
 
 .todo__title {
+    padding: 20px;
     font-family: Poppins;
     color: black;
     font-weight: bold;
