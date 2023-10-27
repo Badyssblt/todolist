@@ -4,10 +4,8 @@
   padding: 20px;
   justify-self: end;
   background: white;
+
 }
-
-
-
 
 #addTask {
   display: grid;
@@ -60,6 +58,7 @@
   grid-template-rows: repeat(4, 1fr);
   gap: 5px;
   background: var(--background-calendar);
+  border-radius: 10px;
 }
 
  

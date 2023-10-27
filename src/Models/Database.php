@@ -104,11 +104,9 @@ class Database
             throw new \Exception("Table inconnue");
         }
 
-        $updateValues = '';
-        foreach ($data as $key => $value) {
-            $updateValues .= "$key=:$key, ";
-        }
-        $updateValues = rtrim($updateValues, ', ');
+        $updateValues = implode(', ', array_map(function ($key) {
+            return "$key=:$key";
+        }, array_keys($data)));
 
         $sql = "UPDATE {$this->table} SET $updateValues WHERE id = :id";
         $query = $this->connection->prepare($sql);
@@ -119,6 +117,6 @@ class Database
         $query->bindParam(':id', $id);
 
         $query->execute();
-
     }
+
 }

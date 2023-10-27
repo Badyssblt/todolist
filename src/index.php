@@ -23,5 +23,6 @@ $router->addRoutes('/checkEvent', [new Post(), "check"]);
 $router->addRoutes('/uncheckEvent', [new Post(), "uncheck"]);
 $router->addRoutes('/addCategory', [new Post(), "createCategory"]);
 $router->addRoutes('/getCategory', [new Post(), "getCategory"]);
+$router->addRoutes('/updateTodoOrder', [new Post(), "changeOrder"]);
 
 $router->handleRequest($path);

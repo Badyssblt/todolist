@@ -97,6 +97,7 @@
 }
 
 .addCategory {
+    z-index: 20;
     width: 400px;
     margin-top: 60px;
     height: fit-content;

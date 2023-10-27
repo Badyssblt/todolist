@@ -61,9 +61,6 @@ function createForm(data, classes) {
         console.error("Type de champ non pris en charge : " + input.type);
         continue;
     }
-    let close = $(
-      "<button class='form__close' onclick='hideForm()'><i class='fa-solid fa-xmark'></i></button>"
-    );
 
     form.append(field);
   }
