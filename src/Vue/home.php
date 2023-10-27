@@ -24,7 +24,7 @@
     <main>
         <?php require("./Vue/components/nav.php") ?>
         <div class="form" style="display: none">
-            <button class='form__close' onclick='hideForm()'><i class='fa-solid fa-xmark'></i></button>
+
         </div>
         <?php require('./Vue/components/taskList.php') ?>
         <div id="calendar">

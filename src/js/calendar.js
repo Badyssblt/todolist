@@ -140,15 +140,20 @@ $(document).ready(function () {
 
     // Création du calendrier
     for (let hour = 0; hour <= 23; hour++) {
+      let hours = $(
+        '<div class="hour" data-hour="' +
+          hour +
+          '"><p class="hourItem">' +
+          hour +
+          ":00</p></div>"
+      );
+      $("#hours").append(hours);
       let event = $(
         "<div class='events'><i class='fas fa-plus'></i></div>"
       ).click(function () {
         addEvent.call(this, hour);
       });
-      $("#hours").append(
-        '<div class="hour" data-hour="' + hour + '">' + pad(hour) + ":00</div>",
-        event
-      );
+      hours.append(event);
 
       let hourElement = $(
         '<div class="hour" data-hour="' + hour + '">' + pad(hour) + ":00</div>"
@@ -157,6 +162,8 @@ $(document).ready(function () {
       hourElement.on("click", addEvent);
     }
 
+    $(".hour").append(event);
+
     // Ajout de la ligne pour l'heure actuelle
     updateCurrentHourLine();
   }
@@ -164,7 +171,7 @@ $(document).ready(function () {
   function updateCurrentHourLine() {
     const currentHour = new Date().getHours();
     const currentMinute = new Date().getMinutes();
-    const topPosition = ((currentHour * 60 + currentMinute) / 60) * 45; // 50px par heure
+    const topPosition = ((currentHour * 60 + currentMinute) / 60) * 78; // 50px par heure
     $(".current-hour-line").remove();
 
     if (currentDate.toDateString() === new Date().toDateString()) {
@@ -196,7 +203,9 @@ function addEvent() {
 }
 
 function createsForm(date, hour) {
+  $(".form").empty();
   let form = $("<form id='addTask' method='POST'></form>");
+
   let dateAndHour = date + "," + hour;
   let dateAndHourDiv = $(
     "<div class='form__hour'><p>Date et jour de l'évenèment </p><p class='form__hour__content'>" +
@@ -215,8 +224,13 @@ function createsForm(date, hour) {
     description: $("<textarea name='description' id='description'></textarea>"),
     submit: $("<input type='submit'>"),
   };
+  let close = $(
+    "<a class='form__close' onclick='hideForm()'><i class='fa-solid fa-xmark'></i></a>"
+  );
+
   $(".form").css("display", "block");
   $(".form").append(form);
+  form.append(close);
   form.append(inputs.name);
   form.append(dateAndHourDiv);
   form.append(dateAndHourInput);
