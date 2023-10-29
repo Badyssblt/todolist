@@ -69,12 +69,14 @@
     font-weight: bold;
 }
 
+
 .check {
     background: var(--text-color);
     border: 1px solid transparent;
 }
 
 .check:hover {
+    cursor: pointer;
     background: none;
     border: 1px solid var(--text-color);
 }

@@ -119,4 +119,16 @@ class Database
         $query->execute();
     }
 
+    public function delete($id)
+    {
+        if (empty($this->table)) {
+            throw new \Exception('Table inconnue');
+        }
+
+        $sql = 'DELETE FROM ' . $this->table . ' WHERE id = :id';
+        $query = $this->connection->prepare($sql);
+        $query->bindParam('id', $id);
+        $query->execute();
+
+    }
 }

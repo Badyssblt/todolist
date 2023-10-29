@@ -40,4 +40,31 @@ class Todo extends Database
         echo json_encode($response);
 
     }
+
+    public function editTodo($id, $color)
+    {
+        if (empty($this->table)) {
+            throw new \Exception("Table inconnue");
+        }
+        $this->edit(["color" => $color], $id);
+        $response =
+            [
+                "message" => "envoyé"
+            ];
+        echo json_encode($response);
+    }
+
+    public function deleteTodo($id)
+    {
+        if (empty($this->table)) {
+            throw new \Exception("Table inconnue");
+        }
+
+        $this->delete($id);
+        $response =
+            [
+                "message" => "Todo supprime"
+            ];
+        echo json_encode($response);
+    }
 }

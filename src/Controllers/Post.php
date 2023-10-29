@@ -92,17 +92,32 @@ class Post
             if (!empty($orderData)) {
                 $this->todo->changeOrder($orderData);
             } else {
-                // Gestion d'une éventuelle erreur si aucune donnée n'est reçue
                 $response = [
                     "error" => "Aucune donnée d'ordre reçue."
                 ];
                 echo json_encode($response);
             }
         } else {
-            // Gestion d'une éventuelle erreur si la requête n'est pas une requête POST
             header('HTTP/1.1 405 Method Not Allowed');
             echo 'Méthode non autorisée';
         }
 
+    }
+
+    public function editTodo()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['todoID'];
+            $color = $_POST['color'];
+            $this->todo->editTodo($id, $color);
+        }
+    }
+
+    public function deleteTodo()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            $id = $_POST['id'];
+            $this->todo->deleteTodo($id);
+        }
     }
 }
