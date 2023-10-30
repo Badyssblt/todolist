@@ -25,6 +25,35 @@ class Todo extends Database
         }
     }
 
+    public function getTodo($category, $name)
+    {
+        if (empty($this->table)) {
+            throw new \Exception("Table inconnue");
+        }
+        if ($_SESSION['ID']) {
+            $userID = $_SESSION['ID'];
+            $sql = 'SELECT todo.*, categorydefault.name AS categoryName FROM todo LEFT JOIN categorydefault ON todo.category = categorydefault.ID WHERE userID = :userID';
+            if($category !== null){
+                $sql .= ' AND todo.category = :category';
+            }
+            if($name !== null){
+                $sql .= ' AND todo.name LIKE :name ';
+            }
+            $query = $this->connection->prepare($sql);
+            $query->bindValue(':userID', $userID, \PDO::PARAM_INT);
+            if ($category !== null) {
+                $query->bindValue(':category', $category, \PDO::PARAM_INT);
+            }
+            
+            if ($name !== null) {
+                $query->bindValue(':name', "%$name%", \PDO::PARAM_STR);
+            }
+            $query->execute();
+            $res = $query->fetchAll(\PDO::FETCH_ASSOC);
+            echo json_encode($res);
+        }
+    }
+
     public function changeOrder($orderData)
     {
         if (empty($this->table)) {

@@ -1,4 +1,15 @@
 <div class="todo__all">
+    <div class="todo__filter">
+        <div class="filter__icon">
+            <i class="fas fa-search"></i>
+        </div>
+        <form id='search'>
+            <input type="text" name="name" id="todoName" placeholder="Nom de l'évenèment">
+            <select name="category" id="category" >
+
+            </select>
+        </form>
+    </div>
     <p class="todo__title">Taches</p>
     <div class="todo__wrapper">
 
@@ -30,6 +41,21 @@
 
 <script>
     $(document).ready(() => {
+        let isOpen;
+        $('.filter__icon').click(function(){
+            if(!isOpen){
+                $("#search").css("display", "block");
+                $(".todo__filter").addClass("active");
+                isOpen = true;
+            }else {
+                $("#search").css("display", "none");
+                $(".todo__filter").removeClass("active");
+                isOpen = false;
+            }
+            
+        });
+
+
         $('.todo__wrapper').sortable({
             axis: 'y',
             update: function (event, ui) {
@@ -38,6 +64,77 @@
                 updateTodoOrder(todoID, updatedOrder);
             }
         });
+
+        $.ajax({
+            type: "GET",
+            url: "/getCategory",
+            dataType: "JSON",
+            success: function (response) {
+                for (let i = 0; i < response.length; i++) {
+                    $("#category").append($(`<option value='${response[i].id}'>${response[i].name}</option>`))
+                }
+            }
+        });
+        $(document).on("submit", "#search", function(e){
+            e.preventDefault();
+        })
+        $(document).on('change', '#search', function () {
+            let category = $("#category").find(":selected").val();
+            let name = $("#todoName").val();
+            $.ajax({
+                type: "POST",
+                url: "/getTodo",
+                data:
+                {
+                    category: category,
+                    name: name
+                },
+                dataType: "JSON",
+                success: function (response) {
+                    renderFilteredTodoList(response);
+                    console.log(response);
+                }, error: function (jqXHR) {
+                    console.log(jqXHR);
+                }
+            });
+        })
+
+        function renderFilteredTodoList(filteredTodos) {
+            const todoWrapper = $('.todo__wrapper');
+            todoWrapper.empty();
+
+            if (filteredTodos != null) {
+                if (filteredTodos.length > 0) {
+                    filteredTodos.forEach(function (item) {
+                        var state = item.state === "1";
+                        let color = item.color;
+                        var categoryHtml = item.categoryName !== null ?
+                            '<p>' + item.categoryName + '</p>' :
+                            '<p onclick="defineCategory(' + item.id + ', this)">Définir une catégorie</p>';
+                        let textColor = isColorDark(color) ? 'white' : 'black';
+                        let todoHtml = `
+                                                                <div class="todo__items" data-id='${item.id}' data-order='${item.orderTodo}' style='background: ${color}; color: ${textColor}'>
+                                                                    <button class="btn__check ${state ? 'check' : 'uncheck'}" data-id='${item.id}'></button>
+                                                                    <p class="todo__name">${item.name}</p>
+                                                                    <div class="todo__category">${categoryHtml}</div>
+                                                                    <div class="todo__description">
+                                                                        <p class="todo__description todo__description__title hidden">Description : </p>
+                                                                        <p class="todo__description hidden">${item.description}</p>
+                                                                    </div>
+                                                                    <div class='todo__parameter'><i class='fas fa-gear'></i></div>
+                                                                    <button class="btn__more">
+                                                                        <i class="fas fa-angle-down close"></i>
+                                                                    </button>
+                                                                </div>`;
+                        todoWrapper.append(todoHtml);
+                    });
+                } else {
+                    todoWrapper.append('<p class="warning__text">Aucune tâche trouvée pour les critères spécifiés.</p>');
+                }
+            } else {
+                todoWrapper.append('<p class="warning__text">Une erreur s\'est produite lors de la récupération des tâches.</p>');
+            }
+        }
 
         function updateTodoOrder(todoID, newPosition) {
             var updatedOrderData = {};
@@ -187,8 +284,9 @@
                 });
             })
             $(document).on('click', '.todo__parameter', function () {
-                $('.parameter').css('display', 'block');
-
+                $('.parameter').css('display', 'grid');
+                let todoID = $(this).closest(".todo__items").data('id');
+                $("#todoID").val(todoID);
             })
 
             $('#deleteTask').click(function () {

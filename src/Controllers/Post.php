@@ -120,4 +120,12 @@ class Post
             $this->todo->deleteTodo($id);
         }
     }
+
+    public function getTodo()
+    {
+        $category = $_POST['category'];
+        $name = $_POST['name'];
+        $this->todo->getTodo($category, $name);
+
+    }
 }

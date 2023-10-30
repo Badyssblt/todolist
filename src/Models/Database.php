@@ -53,6 +53,7 @@ class Database
     }
 
 
+
     public function insertData($data): bool
     {
         if (empty($this->table)) {

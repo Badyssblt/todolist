@@ -26,5 +26,7 @@ $router->addRoutes('/getCategory', [new Post(), "getCategory"]);
 $router->addRoutes('/updateTodoOrder', [new Post(), "changeOrder"]);
 $router->addRoutes('/editTodo', [new Post(), "editTodo"]);
 $router->addRoutes("/deleteTodo", [new Post(), 'deleteTodo']);
+$router->addRoutes("/getTodo", [new Post(), "getTodo"]);
+
 
 $router->handleRequest($path);
