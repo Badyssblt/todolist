@@ -12,9 +12,10 @@ $router = new Router();
 
 $path = $_SERVER["REQUEST_URI"];
 
-$router->addRoutes('/', [new homePage(), 'index']);
+$router->addRoutes('/home', [new homePage(), 'home']);
 $router->addRoutes('/register', [new Register(), 'index']);
 $router->addRoutes('/login', [new Login(), "index"]);
+$router->addRoutes('/', [new homePage(), 'index']);
 
 
 // BACKEND

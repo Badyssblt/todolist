@@ -7,7 +7,12 @@ use Models\Todo;
 
 class homePage
 {
+
     public function index()
+    {
+        require(dirname(__DIR__) . DIRECTORY_SEPARATOR . "Vue" . DIRECTORY_SEPARATOR . "index" . ".php");
+    }
+    public function home()
     {
         $todo = new Todo();
         $lists = $todo->getUserTodo();

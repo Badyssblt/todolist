@@ -10,10 +10,14 @@
             </select>
         </form>
     </div>
-    <p class="todo__title">Taches</p>
+    <div class="todo__top">
+        <p class="todo__title">Mes taches</p>
+        <a id='addTaskButton'>Ajouter une tâche</a>
+    </div>
     <div class="todo__wrapper">
 
-    </div>
+</div>
+
     <div class="addTask" style='display: none'>
 
     </div>
@@ -58,7 +62,7 @@
 
         $('.todo__wrapper').sortable({
             axis: 'y',
-            update: function (event, ui) {
+            update: function (event, ui) {  
                 var updatedOrder = $(this).sortable('toArray', { attribute: 'data-order' });
                 let todoID = $(this).attr("data-id");
                 updateTodoOrder(todoID, updatedOrder);
@@ -97,6 +101,11 @@
                     console.log(jqXHR);
                 }
             });
+        });
+
+        $("#addTaskButton").click(() => {
+            let date = new Date();
+            addEvent(date);
         })
 
         function renderFilteredTodoList(filteredTodos) {
@@ -160,7 +169,7 @@
         function updateTodoList() {
             $.ajax({
                 type: "GET",
-                url: "/",
+                url: "/home",
                 success: function (response) {
                     renderTodoList(response);
                 },

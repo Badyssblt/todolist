@@ -3,12 +3,22 @@ main {
     width: 100%;
     min-height: 100vh;
     display: grid;
-    grid-template-columns: 20% 50% 30%;
+    grid-template-columns: 380px 50% 40%;
     background: var(--background-color);
 }
 
 aside {
-    background: white;
+    background: var(--text-color);
+    border: 1px solid black;
+    width: 360px;
+}
+
+.nav__title {
+    margin-left: 40px;
+    font-family: Poppins;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: var(--background-secondary);
 }
 
 .hidden {
@@ -17,29 +27,48 @@ aside {
 
 .fas {
     text-align: center;
+    padding-right: 10px;
+    width: 28px;
+    height: 16px;
 }
 
 .menu {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 30px;
 }
 
 .items {
+    color: white;
     display: flex;
     flex-direction: row;
     align-items: center;
     font-family: var(--font-menu);
-    font-weight: 700;
+    font-weight: 600;
+    text-decoration: none;
     transition: all .2s ease-in-out;
 }
 
-.items:hover {
-    cursor: pointer;
-    color: var(--text-color);
-    transform: scale(1.1);
-
+.items > a {
+    padding-left: 10px;
+    width: 140px;
+    height: 40px;
+    border-radius: 13px;
+    display: flex;
+    align-items: center;
+    color: white;
+    text-decoration: none;
+    transition: all .2s ease-in-out;
+    border: 1px solid transparent;
 }
+
+.items > a:hover {
+    cursor: pointer;
+    background-color: var(--background-secondary);
+    color: black;
+    border: 1px solid black;
+}
+
 
 li > i {
     padding-right: 10px;

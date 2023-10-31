@@ -40,12 +40,6 @@ $(document).ready(function () {
           ":00</p></div>"
       );
       $("#hours").append(hours);
-      let event = $(
-        "<div class='events'><i class='fas fa-plus'></i></div>"
-      ).click(function () {
-        addEvent.call(this, hour);
-      });
-      hours.append(event);
 
       let hourElement = $(
         '<div class="hour" data-hour="' + hour + '">' + pad(hour) + ":00</div>"
@@ -84,23 +78,20 @@ $(document).ready(function () {
 });
 
 function addEvent() {
-  let hour = $(this).text();
   let currentDate = new Date();
   currentDate = formatDate(currentDate);
   console.log("clické");
-  createsForm(currentDate, hour);
+  createsForm(currentDate);
 }
 
-function createsForm(date, hour) {
+function createsForm(date) {
   $(".form").empty();
   let form = $("<form id='addTask' method='POST'></form>");
 
-  let dateAndHour = date + "," + hour;
+  let dateAndHour = date;
   let dateAndHourDiv = $(
     "<div class='form__hour'><p>Date et jour de l'évenèment </p><p class='form__hour__content'>" +
       date +
-      " " +
-      hour +
       "</p></div>"
   );
   let dateAndHourInput = $(

@@ -1,12 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 
 :root{
     --text-color: #0077b6;
-    --border: 10px;
-    --background-color: #e9ecef;
+    --border: 28px;
+    --background-color: white;
+    --background-secondary: #FEFAE0;
     --background-calendar: #002133;
     --font-menu: Poppins;
-    --font-todo: Roboto;
+    --font-todo: Inter;
 }
 
 body {

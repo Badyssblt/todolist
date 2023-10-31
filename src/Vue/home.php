@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="./css/home.css">
     <link rel="stylesheet" href="./css/taskList.css">
     <link rel="stylesheet" href="./css/calendar.css">
+    <link rel="stylesheet" href="./css/friend.css">
     <link rel="stylesheet" href="./css/warning.css">
     <link rel="stylesheet" href="./css/forms.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -27,7 +28,8 @@
 
         </div>
         <?php require('./Vue/components/taskList.php') ?>
-        <div id="calendar">
+        <?php require('./Vue/components/friend.php') ?>
+        <!-- <div id="calendar">
             <div id="date-selector">
                 <button id="prev-day" class="btn"><i class="fas fa-angle-left"></i></button>
                 <span id="selected-date"></span>
@@ -37,7 +39,7 @@
 
             </div>
 
-        </div>
+        </div> -->
     </main>
     <script src="https://kit.fontawesome.com/c1cb64b22b.js" crossorigin="anonymous"></script>
 </body>

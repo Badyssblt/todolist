@@ -1,0 +1,126 @@
+body {
+    min-height: 100vh;
+}
+
+h1 {
+    margin: 0;
+}
+
+main {
+    position: relative;
+    height: 60vh;
+    display: block;
+    background: var(--text-color);
+}
+
+menu {
+    margin: 0;
+    padding: 0;
+}
+
+
+header {
+    background-color: var(--text-color);
+}
+
+#nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 10%;
+}
+
+#menu__title {
+    font-family: Poppins;
+    font-weight: bold;
+    color: var(--background-secondary);
+}
+
+.menu__item {
+    padding: 5px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    border-radius: 40px;
+    font-family: Poppins;
+    color: black;
+    background: var(--background-secondary);
+    text-decoration: none;
+    font-weight: bold;
+    border: 1px solid black;
+}
+
+
+
+.hero__wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    height: 500px;
+    z-index: 30;
+}
+
+.hero__title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 600px;
+    height: 300px;
+}
+
+.main__title {
+    width: 550px;
+    font-family: Poppins;
+    font-weight: bold;
+    font-size: 2.3em;
+    color: white;
+}
+
+.hero__link {
+    width: 140px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 40px;
+    text-decoration: none;
+    font-family: Poppins;
+    color: black;
+    padding: 5px;
+    background: var(--background-secondary);
+}
+
+.hero__shape {
+    position: relative;
+    top: -500px;
+    width: 100%;
+    height: 600px;
+    overflow: hidden;
+}
+
+.hero__circle {
+    position: absolute;
+    bottom: -30px;
+    left: 100px;
+    height: 180px;
+    width: 180PX;
+    border-radius: 50%;
+    background-color: var(--background-secondary);
+}
+
+.hero__wave {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    right: -300px;
+
+}
+
+#section__informations {
+    width: 100%;
+    height: 40vh;
+    background-color: var(--background-secondary);
+}

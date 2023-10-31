@@ -4,7 +4,7 @@
   padding: 20px;
   justify-self: end;
   background: white;
-
+  border-left: 1px solid black;
 }
 
 .current-hour-line {
