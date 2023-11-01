@@ -16,6 +16,7 @@
         integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="./js/todoList.js"></script>
+    <script src="./js/friend.js"></script>
     <script src="./js/calendar.js"></script>
     <title>Accueil</title>
 

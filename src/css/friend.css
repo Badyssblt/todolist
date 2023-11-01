@@ -20,6 +20,28 @@
     border-bottom: 1px solid rgba(0, 0, 0, .2);
 }
 
+.friends__form {
+    display: none;
+    flex-direction: row;
+    position: absolute;
+    width: 200px;
+    height: 100px;
+    top: 40px;
+    left: 20px;
+    
+}
+
+.friends__form > input {
+    height: 30px;
+    padding: 0;
+    padding-left: 10px;
+}
+
+#friend__name {
+    border-radius: 30px;
+    background-color: var(--background-secondary);
+}
+
 .friends__wrapper {
     display: grid;
     grid-auto-rows: auto;
@@ -47,6 +69,7 @@
 }
 
 .friends__add {
+    position: relative;
     display: flex;
     justify-content: center;
     align-self: center;
@@ -63,4 +86,21 @@
     border-radius: 30px;
     border: 3px solid var(--background-secondary);
     font-size: .8em;
+    user-select: none;
+}
+
+.friends__add__button:hover {
+    cursor: pointer;
+}
+
+.friends__add__form {
+    display: none;
+}
+
+
+#add__friend {
+    background: var(--background-secondary);
+    color: black;
+    padding: 5px;
+    border-radius: 30px;
 }

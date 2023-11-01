@@ -1,4 +1,5 @@
 <?php
+use Controllers\Friend;
 use Controllers\Login;
 use Controllers\Register;
 use Controllers\homePage;
@@ -29,6 +30,9 @@ $router->addRoutes('/editTodo', [new Post(), "editTodo"]);
 $router->addRoutes("/deleteTodo", [new Post(), 'deleteTodo']);
 $router->addRoutes("/getTodo", [new Post(), "getTodo"]);
 $router->addRoutes('/logout', [new Login(), "logout"]);
+$router->addRoutes('/searchFriend', [new Friend(), 'searchFriends']);
+$router->addRoutes('/getFriends', [new Friend(), 'getFriend']);
+$router->addRoutes('/addFriend', [new Friend(), 'addFriend']);
 
 
 $router->handleRequest($path);
