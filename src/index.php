@@ -4,6 +4,7 @@ use Controllers\Register;
 use Controllers\homePage;
 use Controllers\Router\Router;
 use Controllers\Post;
+use Controllers\Category;
 
 require("../vendor/autoload.php");
 
@@ -12,9 +13,12 @@ $router = new Router();
 
 $path = $_SERVER["REQUEST_URI"];
 
+// FRONTEND
+
 $router->addRoutes('/', [new homePage(), 'index']);
 $router->addRoutes('/register', [new Register(), 'index']);
 $router->addRoutes('/login', [new Login(), "index"]);
+$router->addRoutes('/category', [new Category(), 'index']);
 
 
 // BACKEND
