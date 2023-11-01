@@ -3,24 +3,19 @@
         <p><i class='fas fa-user'></i>Amis</p>
     </div>
     <div class="friends__wrapper">
-        <div class="friend">
-            <div class="img__container">
-                <img src="./images/user.png" alt="">
+        <?php
+        foreach ($friendsList as $item) { ?>
+            <div class="friend">
+                <div class="img__container">
+                    <img src="./images/user.png" alt="">
+                </div>
+                <p>
+                    <?= $item['friend_name'] ?>
+                </p>
             </div>
-            <p>John Doe</p>
-        </div>
-        <div class="friend">
-            <div class="img__container">
-                <img src="./images/user.png" alt="">
-            </div>
-            <p>John Doe</p>
-        </div>
-        <div class="friend">
-            <div class="img__container">
-                <img src="./images/user.png" alt="">
-            </div>
-            <p>John Doe</p>
-        </div>
+            <?php
+        }
+        ?>
     </div>
     <div class="friends__add">
         <a class='friends__add__button'>Ajouter un ami</a>

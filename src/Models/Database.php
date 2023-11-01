@@ -36,6 +36,32 @@ class Database
 
     }
 
+    public function getByColumns($sql, $columns)
+    {
+        if (empty($this->table)) {
+            throw new \Exception("Table name not set.");
+        }
+
+        $query = $this->connection->prepare($sql);
+
+        // Bind values using named placeholders with proper data types
+        foreach ($columns as $columnName => $columnValue) {
+            if (is_int($columnValue)) {
+                $query->bindValue(":$columnName", $columnValue, \PDO::PARAM_INT);
+            } else {
+                $query->bindValue(":$columnName", $columnValue);
+            }
+        }
+
+        $query->execute();
+
+        return $query->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+
+
+
+
     public function getOne($id): array
     {
         if (empty($this->table)) {

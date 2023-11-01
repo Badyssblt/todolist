@@ -28,4 +28,12 @@ class Login
 
 
     }
+
+    public function logout()
+    {
+        if (isset($_SESSION['ID'])) {
+            session_start();
+            session_destroy();
+        }
+    }
 }
