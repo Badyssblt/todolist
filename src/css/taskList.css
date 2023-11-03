@@ -1,26 +1,66 @@
+.todo__all {
+    display: grid;
+    grid-template-rows: 90px auto auto;
+    height: fit-content;
+}
+
+.todo__top {
+    justify-self: center;
+    display: grid;
+    width: 90%;
+    height: fit-content;
+    grid-template-rows: repeat(2, auto);
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--text-color);
+}
+
+#addTaskButton {
+    justify-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #4D6775;
+    width: 600px;
+    height: 35px;
+    font-family: Poppins;
+    border: 3px solid var(--text-color);
+    border-radius: 35px;
+}
+
+.todo__filter {
+    height: fit-content;
+}
+
 .todo__wrapper {
     width: 100%;
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 5px;
     padding: 10px;
 }
 
+
 .todo__title {
+    padding: 5px;
+    margin-bottom: 20px;
+    margin-top: 0;
     font-family: Poppins;
     color: black;
     font-weight: bold;
-    font-size: 1.3em;
+    font-size: 1.5em;
 }
 
 .todo__items {
+    width: 70%;
     position: relative;
     display: grid;
     grid-template-columns: 10% 62% 28%;
     padding: 10px;
     border-radius: var(--border);
     font-family: var(--font-todo);
-    border: 1px solid darkgray;
+    border: 1px solid black;
+    background-color: var(--background-secondary);
 }
 
 .todo__name {
@@ -68,12 +108,14 @@
     font-weight: bold;
 }
 
+
 .check {
     background: var(--text-color);
     border: 1px solid transparent;
 }
 
 .check:hover {
+    cursor: pointer;
     background: none;
     border: 1px solid var(--text-color);
 }

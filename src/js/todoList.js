@@ -1,5 +1,8 @@
 $(document).ready(() => {
   // GERE LE CHECK ET UNCHECK DES TODO
+  $(document).on("change", "#form__color", function () {
+    $("#span__color").css("background-color", $(this).val());
+  });
 
   $(document).on("click", ".btn__more", function () {
     if ($(this).find("i").hasClass("close")) {
@@ -47,11 +50,19 @@ function createForm(data, classes) {
           .attr("value", input.value)
           .attr("id", "todoID");
         break;
+      case "span":
+        field = $("<span>").attr("id", "span__color");
+        let color = $("<input>")
+          .attr("id", "form__color")
+          .attr("type", "color");
+        field.append(color);
+        break;
       case "select":
         field = $("<select>").attr("name", input.name).attr("id", "category");
         // CREER LES OPTIONS DU SELECT
         for (let j = 0; j < input.options.length; j++) {
           let options = input.options[j];
+
           field.append(
             $("<option>").attr("value", options.value).text(options.label)
           );
@@ -108,5 +119,9 @@ function defineCategory(todoID, clickedElement) {
 }
 
 function hideForm() {
-  $(".form").css("display", "none");
+  $(".addTask").css("display", "none");
+}
+
+function hideFormParameter() {
+  $(".parameter").css("display", "none");
 }

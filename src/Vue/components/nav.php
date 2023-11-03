@@ -1,16 +1,10 @@
 <aside>
+    <h1 class='nav__title'>TaskManager</h1>
     <menu class="menu">
-        <li class="items"><i class="fas fa-calendar"></i>Aujourd'hui</li>
-        <li class="items">Catégorie</li>
-        <li class="items">Projets</li>
-        <?php
-        if (isset($_SESSION['ID'])) { ?>
-            <li class="items">Mon compte</li>
-            <?php
-        } else { ?>
-            <li class="items"><a href="/login">Se connecter</a></li>
-        <?php }
-        ?>
-
+        <li class="items"><a href="/"><i class='fas fa-house'></i>Accueil</a></li>
+        <li class="items"><a href="/"><i class='fas fa-calendar-days'></i>Calendrier</a></li>
+        <li class="items"><a href="/"><i class='fas fa-file'></i>Mes taches</a></li>
+        <li class="items"><a href="/"><i class='fas fa-folder'></i>Projets</a></li>
+        <li><a href="/logout">Se déconnecter</a></li>
     </menu>
 </aside>

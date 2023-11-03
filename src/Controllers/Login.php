@@ -21,11 +21,19 @@ class Login
         $user = new User();
         $connection = $user->login($email, $password);
         if ($connection) {
-            header('Location: /');
+            header('Location: /home');
         }
 
         echo "Connexion echoué";
 
 
+    }
+
+    public function logout()
+    {
+        if (isset($_SESSION['ID'])) {
+            session_start();
+            session_destroy();
+        }
     }
 }

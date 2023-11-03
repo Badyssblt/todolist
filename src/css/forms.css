@@ -1,4 +1,4 @@
-.form {
+.form, .addTask, .parameter {
     z-index: 30;
     width: 400px;
     height: 500px;
@@ -8,7 +8,19 @@
     transform: translate(-50%, -50%);
     background: var(--background-calendar);
     padding: 10px;
-  }
+    border-radius: 10px;
+}
+
+
+.form__class {
+    height: 30px;
+}
+
+.form__title {
+    font-family: Poppins;
+    color: white;
+    font-weight: bold;
+}
   
 input {
     border-bottom: 1px solid grey;
@@ -23,7 +35,7 @@ input {
   
 input::placeholder{
     color: rgba(0, 0, 0, .7);
-  }
+}
 
 .form__hour {
     display: flex;
@@ -35,4 +47,97 @@ input::placeholder{
 
 .form__hour__content {
     font-weight: bold;
+}
+
+#span__color {
+  position: absolute;
+  right: 30px;
+  top: 20px;
+  background-color: red;
+  width: 30px;
+  height: 30px;
+  display: block;
+  border-radius: 50%;
+}
+
+#form__color {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  z-index: 30;
+}
+
+#category {
+  border: 1px solid var(--text-color);
+  color: var(--text-color);
+  font-family: Poppins;
+  padding: 5px;
+  user-select: none;
+}
+
+
+
+.parameter {
+  display: grid;
+  grid-template-rows:  30px 40px 120px 80px 60px 60px;
+}
+
+#deleteTask {
+  height: 40px;
+  font-family: Poppins;
+  color: white;
+  background: red;
+  padding: 5px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+}
+
+#deleteTask:hover {
+  background: white;
+  color: black;
+  border: 1px solid black;
+}
+
+.fa-xmark {
+  color: white;
+}
+
+.todo__filter {
+  width: fit-content;
+  height: 40px;
+  margin: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.todo__parameter {
+  grid-row: 2;
+  grid-column: 3;
+  justify-self: end;
+}
+
+#search {
+  padding: 10px;
+  display: none;
+}
+
+.filter__icon {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  padding: 5px;
+  border-radius: 50%;
+  font-size: 1.2em;
+}
+
+.todo__filter.active {
+  width: 420px;
+  background-color: white;
+  border-radius: 50px;
 }

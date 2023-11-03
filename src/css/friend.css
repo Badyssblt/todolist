@@ -1,0 +1,150 @@
+.friends__content {
+    display: grid;
+    grid-auto-rows: min-content;
+    justify-self: center;
+    margin-top: 150px;
+    font-family: Poppins;
+    color: white;
+    width: 300px;
+    height: 500px;
+    background-color: var(--text-color);
+    border-radius: 18px;
+}
+
+.friends__top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 85%;
+    height: fit-content;
+    justify-self: center;
+    padding-bottom: 10px;
+    font-size: 1.2em;
+    border-bottom: 1px solid rgba(0, 0, 0, .2);
+}
+
+.fa-bell {
+    color: var(--background-secondary);
+}
+
+.friends__top__bell {
+    position: relative;
+}
+
+.bell__notif {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.bell__menu {
+    display: none;
+    z-index: 20;
+    background: var(--background-secondary);
+    position: absolute;
+    left: -120px;
+    flex-direction: column;
+    padding: 10px;
+    border-radius: 20px;
+    color: black;
+}
+
+.add__friend {
+    z-index: 30;
+}
+
+.friends__form {
+    display: none;
+    flex-direction: row;
+    position: absolute;
+    width: 200px;
+    height: 100px;
+    top: 40px;
+    left: 20px;
+    
+}
+
+.friends__form > input {
+    height: 30px;
+    padding: 0;
+    padding-left: 10px;
+}
+
+#friend__name {
+    border-radius: 30px;
+    background-color: var(--background-secondary);
+}
+
+.friends__wrapper {
+    display: grid;
+    grid-auto-rows: auto;
+    margin-top: 20px;
+    margin-left: 20px;
+    gap: 10px;
+    min-height: 100px;
+    height: fit-content;
+}
+
+
+.friend {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+}
+
+.waiting {
+    width: 150px;
+    justify-content: space-between;
+    z-index: 20;
+}
+
+
+.friend__info {
+    display: flex;
+    flex-direction: row;
+
+}
+.img__container {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.img__container img {
+    width: 100%;
+    height: 100%;
+}
+
+.friends__add {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    height: 60px;
+}
+
+.friends__add__button {
+    width: 80%;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-self: center;
+    border-radius: 30px;
+    border: 3px solid var(--background-secondary);
+    font-size: .8em;
+    user-select: none;
+}
+
+.friends__add__button:hover {
+    cursor: pointer;
+}
+
+
+#add__friend {
+    background: var(--background-secondary);
+    color: black;
+    padding: 5px;
+    border-radius: 30px;
+}
