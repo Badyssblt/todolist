@@ -7,13 +7,23 @@ class Friends extends Database
 
     public $table = 'friends';
 
+    public function updateOnlineStatus($userID, $isOnline)
+    {
+        $this->getConnection();
+        $sql = "UPDATE users SET is_online = :is_online WHERE id = :user_id";
+        $query = $this->connection->prepare($sql);
+        $query->bindParam(":is_online", $isOnline, \PDO::PARAM_BOOL);
+        $query->bindParam(":user_id", $userID, \PDO::PARAM_INT);
+        $query->execute();
+    }
+
 
     public function areFriends($userID, $friendID)
     {
         $columns = [
             'user1' => $userID,
             'user2' => $friendID,
-            'state' => 2
+            'state' => 2,
         ];
 
         $sql = "SELECT * FROM friends 
@@ -36,7 +46,7 @@ class Friends extends Database
                 'user2' => $userID,
                 'state' => 2
             ];
-        $sql = "SELECT friends.*, u1.id AS user1_id, u1.username AS user1_name, u2.id AS user2_id, u2.username AS user2_name
+        $sql = "SELECT friends.*, u1.id AS user1_id, u1.username AS user1_name, u2.id AS user2_id, u2.username AS user2_name, u1.is_online AS user1_online, u2.is_online AS user2_online
             FROM friends
             INNER JOIN users u1 ON friends.user1 = u1.id
             INNER JOIN users u2 ON friends.user2 = u2.id
@@ -48,11 +58,16 @@ class Friends extends Database
         foreach ($friends as $row) {
             $friendID = $row['user1'] == $columns['user1'] ? $row['user2_id'] : $row['user1_id'];
             $friendName = $row['user1'] == $columns['user1'] ? $row['user2_name'] : $row['user1_name'];
+            $isOnlineColumn = $row['user1'] == $columns['user1'] ? 'user2_online' : 'user1_online';
+            $friendOnline = isset($row[$isOnlineColumn]) ? $row[$isOnlineColumn] : null;
+
+
             $output[] = [
                 'id' => $row['id'],
                 'friend_name' => $friendName,
                 'state' => $row['state'],
                 'friend_id' => $friendID,
+                'is_online' => $friendOnline
             ];
         }
 

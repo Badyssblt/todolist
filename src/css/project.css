@@ -1,0 +1,125 @@
+
+
+.project__content {
+    width: 100%;
+}
+
+.project__top {
+    justify-self: center;
+    display: grid;
+    width: 90%;
+    height: fit-content;
+    grid-template-rows: repeat(2, auto);
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--text-color);
+}
+.addTaskButton {
+    cursor: pointer;
+    justify-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #4D6775;
+    width: 90%;
+    height: 35px;
+    font-family: Poppins;
+    border: 3px solid var(--text-color);
+    border-radius: 35px;
+}
+
+.project__wrapper {
+    display: grid;
+    gap: 30px;
+    grid-template-columns: repeat(auto-fill, 277px);
+    justify-content: center;
+}
+
+.project {
+    width: 255px;
+    height: fit-content;
+    background: #FEFAE0;
+    padding: 10px;
+    border-radius: 15px;
+    border: 1px solid black;
+}
+
+.project__name {
+    font-family: Poppins;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.progress__title {
+    font-family: Poppins;
+    font-weight: bold;
+}
+
+.project__progress {
+    height: 10px;
+    width: 100px;
+    background: #9EDDFF;
+    border-radius: 20px;
+}
+
+.progress__content {
+    height: 100%;
+    background: var(--text-color);
+    border-radius: 20px;
+}
+
+#progress {
+    height: 100%;
+    border-radius: 20px;
+    background: var(--text-color);
+}
+
+
+.project__form {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: fit-content;
+    padding: 10px;
+    display: none;
+    flex-direction: column;
+    gap: 20px;
+    background: var(--text-color);
+    border-radius: 20px;
+}
+
+.form__title {
+    font-family: Poppins;
+    color: white;
+    font-weight: bold;
+    font-size: 1em;
+    margin-bottom: 0;
+}
+
+.project__form input {
+    padding: 5px;
+    width: 200px;
+    border-radius: 20px;
+    padding-left: 15px;
+    font-family: Poppins;
+    color: black;
+    background: var(--background-secondary);
+    border: 1px solid black;
+    outline: none;
+}
+
+#name {
+    margin-top: 20px;
+}
+
+.project__form input[type=submit]{
+    cursor: pointer;
+}
+
+#close__form {
+    position: absolute;
+    right: 0;
+    color: var(--background-secondary);
+    cursor: pointer;
+}

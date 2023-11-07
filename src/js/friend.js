@@ -42,17 +42,27 @@ $(document).ready(() => {
   });
 
   function renderFriend(data) {
+    console.log(data);
     $(".friends__wrapper").empty();
     for (let i = 0; i < data.length; i++) {
       let item = `<div class="friend" data-friendID='${
         data[i].friend_id || data[i].ID
       }'>
-      <div class="img__container">
+      <div class="friend__info">
+        <div class="img__container">
           <img src="./images/user.png" alt="Image de l'utilisateur">
-      </div>
-      <p>
+        </div>
+        <div class="friend__info__name">
+        <p>
           ${data[i].friend_name || data[i].username}
-      </p>
+        </p>
+        <p>
+          ${data[i].is_online == 1 ? "En ligne" : "Hors ligne"}
+        </p>
+        </div>
+
+      </div>
+
   </div>`;
 
       $(".friends__wrapper").append(item);
@@ -112,7 +122,9 @@ $(document).ready(() => {
         friendID: friendID,
       },
       success: function (response) {
-        console.log(response);
+        $("#add__friend").text();
+        let check = $('<i class="fas fa-check"></i>');
+        $("#add__friend").append(check);
       },
       error: function (jqXHR) {
         console.log(jqXHR);

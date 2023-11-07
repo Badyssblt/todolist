@@ -1,10 +1,12 @@
 <?php
 use Controllers\Friend;
 use Controllers\Login;
+use Controllers\ProjectPage;
 use Controllers\Register;
 use Controllers\homePage;
 use Controllers\Router\Router;
 use Controllers\Post;
+use Controllers\Projects;
 
 require("../vendor/autoload.php");
 
@@ -16,7 +18,9 @@ $path = $_SERVER["REQUEST_URI"];
 $router->addRoutes('/home', [new homePage(), 'home']);
 $router->addRoutes('/register', [new Register(), 'index']);
 $router->addRoutes('/login', [new Login(), "index"]);
+$router->addRoutes('/project', [new Projects(), "index"]);
 $router->addRoutes('/', [new homePage(), 'index']);
+$router->addRoutes('/project/{id}', [new ProjectPage(), "index"]);
 
 
 // BACKEND
@@ -35,6 +39,11 @@ $router->addRoutes('/getFriends', [new Friend(), 'getFriend']);
 $router->addRoutes('/addFriend', [new Friend(), 'addFriend']);
 $router->addRoutes('/getFriendsWaiting', [new Friend(), 'getFriendWaiting']);
 $router->addRoutes('/acceptFriend', [new Friend(), 'acceptFriend']);
-
+$router->addRoutes('/getProject', [new Projects(), "getProject"]);
+$router->addRoutes('/homeProject', [new Projects(), "getTodoProject"]);
+$router->addRoutes('/postEventProject', [new Projects(), "postEventProject"]);
+$router->addRoutes('/checkEventProject', [new Projects(), "checkEvent"]);
+$router->addRoutes('/uncheckEventProject', [new Projects(), "uncheckEvent"]);
+$router->addRoutes('/createProject', [new Projects(), "createProject"]);
 
 $router->handleRequest($path);

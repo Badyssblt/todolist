@@ -14,13 +14,20 @@
     border-bottom: 1px solid var(--text-color);
 }
 
+.todo__top__content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 #addTaskButton {
+    cursor: pointer;
     justify-self: center;
     display: flex;
     justify-content: center;
     align-items: center;
     color: #4D6775;
-    width: 600px;
+    width: 90%;
     height: 35px;
     font-family: Poppins;
     border: 3px solid var(--text-color);

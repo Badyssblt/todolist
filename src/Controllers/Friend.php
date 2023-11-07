@@ -18,6 +18,7 @@ class Friend
         $this->friends = new Friends;
     }
 
+
     public function searchFriends()
     {
         if ($_SERVER['REQUEST_METHOD'] === "POST") {

@@ -11,7 +11,11 @@
         </form>
     </div>
     <div class="todo__top">
-        <p class="todo__title">Mes taches</p>
+        <div class="todo__top__content">
+            <p class="todo__title">Tâche du projet</p>
+            <p><i class="fa-solid fa-ellipsis"></i></p>
+        </div>
+
         <a id='addTaskButton'>Ajouter une tâche</a>
     </div>
     <div class="todo__wrapper">
@@ -42,7 +46,12 @@
     <input type="submit" value="Envoyer">
 </form>
 
-
+<?php
+$userID = $_SESSION['ID'];
+echo '<script>';
+echo "const userID = $userID";
+echo '</script>';
+?>
 <script>
     $(document).ready(() => {
         let isOpen;
@@ -165,10 +174,18 @@
             });
         }
 
+
+        // Mets à jour les todos
         function updateTodoList() {
+            var url = window.location.href;
+            let id = url.substring(url.lastIndexOf('/') + 1);
             $.ajax({
-                type: "GET",
-                url: "/home",
+                type: "POST",
+                url: "/homeProject",
+                data: {
+                    id: id
+                },
+                dataType: "JSON",
                 success: function (response) {
                     renderTodoList(response);
                 },
@@ -203,7 +220,8 @@
                 e.preventDefault();
                 let name = $("#name").val();
                 let description = $("#description").val();
-                let date = $("#dateHidden").val();
+                var url = window.location.href;
+                let projectID = url.substring(url.lastIndexOf('/') + 1);
                 if (name.length < 3) {
                     if ($(".warning__form").length === 0) {
                         const warningText = $("<p class='warning__form'>Veuillez entrer un nom de tâche d'au moins 3 caractères</p>");
@@ -213,11 +231,12 @@
                 } else {
                     $.ajax({
                         type: "POST",
-                        url: "/postEvent",
+                        url: "/postEventProject",
                         data: {
                             name: name,
                             description: description,
-                            data: date,
+                            projectID: projectID,
+                            owner: userID,
                         },
                         success: function (response) {
                             updateTodoList();
@@ -258,7 +277,7 @@
                 let btn = $(this);
                 $.ajax({
                     type: "POST",
-                    url: "/checkEvent",
+                    url: "/checkEventProject",
                     data: {
                         id: id
                     },
@@ -277,7 +296,7 @@
                 let btn = $(this);
                 $.ajax({
                     type: "POST",
-                    url: "/uncheckEvent",
+                    url: "/uncheckEventProject",
                     data: {
                         id: id
                     },
@@ -315,50 +334,51 @@
 
     });
 
-    function isColorDark(hexColor) {
-        const r = parseInt(hexColor.slice(1, 3), 16);
-        const g = parseInt(hexColor.slice(3, 5), 16);
-        const b = parseInt(hexColor.slice(5, 7), 16);
-
-        const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-        return luminance < 0.5;
-    }
-
     // RENDER LES TODOS AVEC LA REPONSE EN PARAMETRE
     function renderTodoList(data) {
         var todoWrapper = $('.todo__wrapper');
         todoWrapper.empty();
-        if (data != null) {
-            if (data.length > 0 && data != null) {
-                data.forEach(function (item) {
-                    var state = item.state === "1";
-                    let color = item.color;
-                    let textColor = isColorDark(color) ? 'white' : 'black';
-                    var categoryHtml = item.categoryName !== null ?
-                        '<p>' + item.categoryName + '</p>' :
-                        '<p onclick="defineCategory(' + item.id + ', this)">Définir une catégorie</p>';
-
+        if (data.type !== "noTodo" && data.type !== "NotAllowed") {
+            if (data != null) {
+                for (let i = 0; i < data.length; i++) {
+                    let item = data[i];
+                    var state = item.task_state === "1";
+                    var categoryHtml = item.task_category !== null ?
+                        '<p>' + item.task_category + '</p>' :
+                        '<p onclick="defineCategory(' + item.task_id + ', this)">Définir une catégorie</p>';
                     var todoHtml = `
-                                                                <div class="todo__items" data-id='${item.id}' data-order='${item.orderTodo}' style='background: ${color}; color: ${textColor}'>
-                                                                    <button class="btn__check ${state ? 'check' : 'uncheck'}" data-id='${item.id}'></button>
-                                                                    <p class="todo__name">${item.name}</p>
+                                                                <div class="todo__items" data-id='${item.task_id}' data-order='${item.orderTodo}'>
+                                                                    <button class="btn__check ${state ? 'check' : 'uncheck'}" data-id='${item.task_id}'></button>
+                                                                    <div class='todo__name__content'>
+                                                                        <p class="todo__name">${item.task_name}</p>
+                                                                        <p style='font-size: .9em'>Par ${item.owner_username}</p>
+                                                                    </div>
+                                                                    
                                                                     <div class="todo__category">${categoryHtml}</div>
                                                                     <div class="todo__description">
                                                                         <p class="todo__description todo__description__title hidden">Description : </p>
-                                                                        <p class="todo__description hidden">${item.description}</p>
+                                                                        <p class="todo__description hidden">${item.task_description}</p>
                                                                     </div>
                                                                     <div class='todo__parameter'><i class='fas fa-gear'></i></div>
-                                                                    ${item.description.length !== 0 ? `<button class="btn__more"><i class="fas fa-angle-down close"></i></button>` : ''}
+                                                                    ${item.task_description.length !== 0 ? `<button class="btn__more"><i class="fas fa-angle-down close"></i></button>` : ''}
                                                                 </div>`;
-
-
                     todoWrapper.append(todoHtml);
-                });
-            }
-        } else {
-            todoWrapper.append('<p class="warning__text">Vous n\'avez pas encore de tâche, commencez par en créer une.</p>');
+                }
 
+
+
+            } else {
+                todoWrapper.append('<p class="warning__text">Vous n\'avez pas encore de tâche, commencez par en créer une.</p>');
+
+            }
+        } else if (data.type == "noTodo") {
+            let message = $("<p class='warning__text'>Il n'y a pas de tâche pour le moment</p>");
+            todoWrapper.append(message);
+        } else if (data.type == "NotAllowed") {
+            window.location.href = "/project";
+            console.log("pas autorisé");
         }
+
     }
 
 </script>
