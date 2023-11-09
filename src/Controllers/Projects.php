@@ -33,6 +33,19 @@ class Projects
 
     }
 
+    public function getProjectWaitingByUser()
+    {
+        $response = $this->project->getProjectWaitingByUser();
+        echo json_encode($response);
+    }
+
+    public function getProjectNameById()
+    {
+        $projectID = $_POST['ID'];
+        $name = $this->project->getProjectNameById($projectID);
+        echo json_encode($name);
+    }
+
     public function postEventProject()
     {
         $data =
@@ -81,6 +94,29 @@ class Projects
                 echo json_encode($res);
             }
         }
+    }
+
+    public function getUserInProject()
+    {
+        $users = $this->project->getUserInProject();
+        echo json_encode($users);
+    }
+
+    public function addUserInProject()
+    {
+        $res = $this->project->addUserInProject();
+        echo json_encode($res);
+    }
+
+    public function updateInvit()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            $projectID = $_POST['projectID'];
+            $choose = $_POST['choose'];
+            $res = $this->project->updateInvit($projectID, $choose);
+            echo json_encode($res);
+        }
+
     }
 
 

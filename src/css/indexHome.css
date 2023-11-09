@@ -50,6 +50,20 @@ header {
     border: 1px solid black;
 }
 
+.menu__item__account {
+    padding: 5px;
+    width: 160px;
+    display: flex;
+    justify-content: center;
+    border-radius: 40px;
+    font-family: Poppins;
+    color: black;
+    background: var(--background-secondary);
+    text-decoration: none;
+    font-weight: bold;
+    border: 1px solid black;
+}
+
 
 
 .hero__wrapper {

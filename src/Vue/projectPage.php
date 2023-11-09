@@ -10,8 +10,12 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="/js/todoList.js"></script>
     <script src="/js/calendar.js"></script>
+    <script src="/js/projectInfo.js"></script>
+    <script src="/js/friendProject.js"></script>
     <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/warning.css">
     <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/friend.css">
     <link rel="stylesheet" href="/css/taskList.css">
     <link rel="stylesheet" href="/css/project.css">
     <link rel="stylesheet" href="/css/friend.css">

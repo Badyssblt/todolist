@@ -1,6 +1,22 @@
 <div class="project__content">
     <div class="project__top">
-        <p class='todo__title'>Mes projets</p>
+        <div class="project__title">
+            <p class='todo__title'>Mes projets</p>
+            <div class="project__waiting__content">
+                <p class='project__int'><i class='fas fa-bell'></i>
+                    <span id="project__int"></span>
+                </p>
+                <div class="project__waiting__container">
+                    <p class='project__waiting__title'>Demande d'ajout à un projet</p>
+                    <div class="project__waiting__wrapper">
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
         <p class='addTaskButton'>Créer un projet</p>
     </div>
 

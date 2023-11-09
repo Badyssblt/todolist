@@ -19,7 +19,8 @@
         </div>
         <div class="input password">
             <i class="fas fa-key"></i>
-            <input type="text" id="email" name="password" placeholder="Entre votre mot de passe..." class="input-field">
+            <input type="password" id="email" name="password" placeholder="Entre votre mot de passe..."
+                class="input-field">
         </div>
         <input type="submit" value="Se connecter" class="submit">
     </form>

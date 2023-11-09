@@ -1,5 +1,5 @@
 <?php
-
+// Déclaration du parent des Models
 namespace Models;
 
 use \PDO;
@@ -16,6 +16,7 @@ class Database
     public $table;
     public $id;
 
+    // Connexion à la base de donnée
     public function getConnection()
     {
         $this->connection = null;
@@ -27,6 +28,7 @@ class Database
         }
     }
 
+    // Obtient toutes les lignes d'une table
     public function getAll(): array
     {
         $sql = "SELECT * FROM " . $this->table;
@@ -36,6 +38,7 @@ class Database
 
     }
 
+    // Obtient les données d'une table sur une table
     public function getByColumns($sql, $columns)
     {
         if (empty($this->table)) {
@@ -44,7 +47,6 @@ class Database
 
         $query = $this->connection->prepare($sql);
 
-        // Bind values using named placeholders with proper data types
         foreach ($columns as $columnName => $columnValue) {
             if (is_int($columnValue)) {
                 $query->bindValue(":$columnName", $columnValue, \PDO::PARAM_INT);
@@ -61,7 +63,7 @@ class Database
 
 
 
-
+    // Obtient un élément d'une table
     public function getOne($id): array
     {
         if (empty($this->table)) {
@@ -107,6 +109,7 @@ class Database
     }
 
 
+    // Gère l'inscription de l'utilisateur
     public function insert($data): void
     {
         if (empty($this->table)) {

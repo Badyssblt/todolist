@@ -20,7 +20,7 @@ class Project extends Database
         JOIN participation ON users.ID = participation.userID 
         JOIN projects ON participation.projectID = projects.ID 
         LEFT JOIN todo_projects ON projects.ID = todo_projects.projectID 
-        WHERE users.ID = :userID 
+        WHERE users.ID = :userID AND participation.state = 1
         GROUP BY projects.ID;";
 
                 $this->getConnection();
@@ -30,6 +30,103 @@ class Project extends Database
                 return $query->fetchAll();
             }
         }
+    }
+
+    public function updateInvit($projectID, $choose): array
+    {
+        if ($_SESSION['ID']) {
+            $userID = $_SESSION['ID'];
+            if ($choose == 1) {
+                $sql = 'UPDATE participation SET state = :state WHERE userID = :userID AND projectID = :projectID';
+                $this->getConnection();
+                $query = $this->connection->prepare($sql);
+                $query->bindParam(':state', $choose);
+                $query->bindParam(':userID', $userID);
+                $query->bindParam(':projectID', $projectID);
+                $res = $query->execute();
+                if ($res) {
+                    $response =
+                        [
+                            "message" => "Invitation mis à jour",
+                            "type" => "ok"
+                        ];
+                } else {
+                    $response =
+                        [
+                            "message" => "Erreur",
+                            "type" => "cancel"
+                        ];
+                }
+            } else if ($choose == 0) {
+                $sql = "DELETE FROM participation WHERE userID = :userID AND projectID = :projectID";
+                $this->getConnection();
+                $query = $this->connection->prepare($sql);
+                $query->bindParam(':userID', $userID);
+                $query->bindParam(':projectID', $projectID);
+                $res = $query->execute();
+                if ($res) {
+                    $response =
+                        [
+                            "message" => "Invitation supprimé",
+                            "type" => "ok"
+                        ];
+                } else {
+                    $response =
+                        [
+                            "message" => "Erreur lors de la mise à jour",
+                            "type" => "cancel"
+                        ];
+                }
+            }
+
+        } else {
+            $response =
+                [
+                    "message" => "Veuillez vous connectez",
+                    "type" => "cancel"
+                ];
+        }
+
+        return $response;
+    }
+
+    public function getProjectWaitingByUser()
+    {
+        if ($_SESSION['ID']) {
+            $userID = $_SESSION['ID'];
+            if ($_SESSION) {
+                $userID = $_SESSION['ID'];
+                $sql = "SELECT 
+            projects.name AS project_name, 
+            projects.ID AS project_id, 
+            COUNT(todo_projects.ID) AS task_count,
+            COUNT(CASE WHEN todo_projects.state = 1 THEN todo_projects.ID END) AS task_finish
+        FROM users 
+        JOIN participation ON users.ID = participation.userID 
+        JOIN projects ON participation.projectID = projects.ID 
+        LEFT JOIN todo_projects ON projects.ID = todo_projects.projectID 
+        WHERE users.ID = :userID AND participation.state = 0
+        GROUP BY projects.ID;";
+
+                $this->getConnection();
+                $query = $this->connection->prepare($sql);
+                $query->bindParam(':userID', $userID, \PDO::PARAM_INT);
+                $query->execute();
+                return $query->fetchAll();
+            }
+        }
+    }
+
+    public function getProjectNameById($projectId)
+    {
+        $sql = "SELECT name FROM projects WHERE ID = :projectId";
+        $this->getConnection();
+        $query = $this->connection->prepare($sql);
+        $query->bindParam(':projectId', $projectId, \PDO::PARAM_INT);
+        $query->execute();
+        $result = $query->fetchColumn();
+
+        return $result;
     }
 
     private function checkUserInProject($userID, $projectID)
@@ -105,13 +202,12 @@ class Project extends Database
     {
         $this->getConnection();
         $projectID = $_POST['projectID'];
-        $sql = "SELECT * FROM participation INNER JOIN users ON participation.userID = users.ID WHERE projectID = :projectID";
+        $sql = "SELECT * FROM participation INNER JOIN users ON participation.userID = users.ID WHERE projectID = :projectID AND state = 1";
         $query = $this->connection->prepare($sql);
         $query->bindParam(':projectID', $projectID);
         $query->execute();
         $users = $query->fetchAll(\PDO::FETCH_ASSOC);
         return $users;
-
     }
 
     public function checkEvent($data, $id)
@@ -139,10 +235,10 @@ class Project extends Database
             if ($req) {
                 $projectId = $this->connection->lastInsertId();
 
-                $sqlParticipation = "INSERT INTO participation VALUES(0, :userID, :projectID)";
+                $sqlParticipation = "INSERT INTO participation VALUES(0, :userID, :projectID, :state)";
                 $queryParticipation = $this->connection->prepare($sqlParticipation);
 
-                $reqParticipation = $queryParticipation->execute(array("userID" => $_SESSION['ID'], "projectID" => $projectId));
+                $reqParticipation = $queryParticipation->execute(array("userID" => $_SESSION['ID'], "projectID" => $projectId, "state" => 1));
 
                 if ($reqParticipation) {
                     $this->connection->commit();
@@ -164,5 +260,52 @@ class Project extends Database
             return false;
         }
     }
+
+    public function addUserInProject()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            $friendID = $_POST['friendID'];
+            $projectID = $_POST['projectID'];
+
+            if (isset($_SESSION['ID'])) {
+                // Vérifie si l'utilisateur n'est pas déjà dans le projet
+                $isUserInProject = $this->checkUserInProject($friendID, $projectID);
+
+                if ($isUserInProject) {
+                    $response =
+                        [
+                            "message" => "L'utilisateur est déjà dans le projet",
+                            "type" => "cancelled"
+                        ];
+                } else {
+                    $sql = "INSERT INTO participation VALUES(0, :userID, :projectID, 0)";
+                    $this->getConnection();
+                    $query = $this->connection->prepare($sql);
+                    $res = $query->execute(array("userID" => $friendID, "projectID" => $projectID));
+
+                    if ($res) {
+                        $response =
+                            [
+                                "message" => "Participation ajoutée",
+                                "type" => "ok"
+                            ];
+                    } else {
+                        $response =
+                            [
+                                "message" => "Erreur lors de l'ajout",
+                                "type" => "cancelled"
+                            ];
+                    }
+                }
+            } else {
+                $response = [
+                    "message" => "Veuillez vous connecter"
+                ];
+            }
+
+            return $response;
+        }
+    }
+
 
 }

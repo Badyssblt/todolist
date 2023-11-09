@@ -10,11 +10,14 @@ use Controllers\Projects;
 
 require("../vendor/autoload.php");
 
-
+// Instance du router
 $router = new Router();
 
+// Récupère l'URL 
 $path = $_SERVER["REQUEST_URI"];
 
+// Ajoute les routes au Router
+// FRONTEND
 $router->addRoutes('/home', [new homePage(), 'home']);
 $router->addRoutes('/register', [new Register(), 'index']);
 $router->addRoutes('/login', [new Login(), "index"]);
@@ -45,5 +48,12 @@ $router->addRoutes('/postEventProject', [new Projects(), "postEventProject"]);
 $router->addRoutes('/checkEventProject', [new Projects(), "checkEvent"]);
 $router->addRoutes('/uncheckEventProject', [new Projects(), "uncheckEvent"]);
 $router->addRoutes('/createProject', [new Projects(), "createProject"]);
+$router->addRoutes('/getUserInProject', [new Projects(), "getUserInProject"]);
+$router->addRoutes('/getProjectByID', [new Projects(), "getProjectNameById"]);
+$router->addRoutes('/addUserInProject', [new Projects(), 'addUserInProject']);
+$router->addRoutes('/getProjectWaitingByUser', [new Projects(), 'getProjectWaitingByUser']);
+$router->addRoutes('/updateProjectWaiting', [new Projects(), "updateInvit"]);
 
+
+// Gère l'URL avec $path et applique la méthode handleRequest
 $router->handleRequest($path);

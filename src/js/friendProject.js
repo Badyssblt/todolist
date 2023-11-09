@@ -47,30 +47,21 @@ $(document).ready(() => {
       let item = `<div class="friend" data-friendID='${
         data[i].friend_id || data[i].ID
       }'>
-      <div class="friend__info">
-        <div class="img__container">
-          <img src="./images/user.png" alt="Image de l'utilisateur">
+        <div class="friend__info">
+          <div class="img__container">
+            <img src="/images/user.png" alt="Image de l'utilisateur">
+          </div>
+          <div class="friend__info__name">
+          <p>
+            ${data[i].friend_name || data[i].username}
+          </p>
+          </div>
+  
         </div>
-        <div class="friend__info__name">
-        <p>
-          ${data[i].friend_name || data[i].username}
-        </p>
-        <p>
-          ${data[i].is_online == 1 ? "En ligne" : "Hors ligne"}
-        </p>
-        </div>
-
-      </div>
-
-  </div>`;
+        <p id='addParticipant'><i class="fas fa-ellipsis-v" style="color: #ffffff;"></i></p>
+    </div>`;
 
       $(".friends__wrapper").append(item);
-      if (data[0].username) {
-        let search = $(
-          "<div class='friends__add__form' data-friendid=''><a id='add__friend'>Ajouter en ami</a></div>"
-        );
-        $(".friend").append(search);
-      }
     }
   }
 
@@ -162,16 +153,16 @@ function renderFriendWaiting(data) {
     let item = `<div class="friend waiting" data-friendID='${
       data[i].friend_id
     }'>
-    <div class="friend__info">
-      <div class="img__container">
-          <img src="./images/user.png" alt="Image de l'utilisateur">
+      <div class="friend__info">
+        <div class="img__container">
+            <img src="./images/user.png" alt="Image de l'utilisateur">
+        </div>
+        <p>
+            ${data[i].friend_name || data[i].username}
+        </p>
       </div>
-      <p>
-          ${data[i].friend_name || data[i].username}
-      </p>
-    </div>
-    <div class='add__friend'><i class="fa-solid fa-plus"></i></div>
-</div>`;
+      <div class='add__friend'><i class="fa-solid fa-plus"></i></div>
+  </div>`;
     $(".bell__menu").append(item);
   }
 }

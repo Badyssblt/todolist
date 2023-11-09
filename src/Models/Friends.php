@@ -86,6 +86,26 @@ class Friends extends Database
         return $search;
     }
 
+    public function isFriendRequestPending($userID, $friendID)
+    {
+        $columns = [
+            'user1' => $userID,
+            'user2' => $friendID,
+            'state' => 1,
+        ];
+
+        $sql = "SELECT * FROM friends 
+            WHERE ((friends.user1 = :user1 AND friends.user2 = :user2) 
+    OR (friends.user1 = :user2 AND friends.user2 = :user1))
+    AND friends.state = :state";
+
+        $this->getConnection();
+        $result = $this->getByColumns($sql, $columns);
+
+        return !empty($result);
+    }
+
+
     public function addFriends($data)
     {
         if (isset($_SESSION['ID'])) {
@@ -96,7 +116,7 @@ class Friends extends Database
             session_start();
         }
 
-        if ($this->areFriends($userID, $friendID)) {
+        if ($this->areFriends($userID, $friendID) || $this->isFriendRequestPending($userID, $friendID)) {
             return false;
         } else {
             $this->getConnection();

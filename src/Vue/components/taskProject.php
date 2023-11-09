@@ -1,15 +1,4 @@
 <div class="todo__all">
-    <div class="todo__filter">
-        <div class="filter__icon">
-            <i class="fas fa-search"></i>
-        </div>
-        <form id='search'>
-            <input type="text" name="name" id="todoName" placeholder="Nom de l'évenèment">
-            <select name="category" id="category">
-
-            </select>
-        </form>
-    </div>
     <div class="todo__top">
         <div class="todo__top__content">
             <p class="todo__title">Tâche du projet</p>
@@ -18,7 +7,7 @@
 
         <a id='addTaskButton'>Ajouter une tâche</a>
     </div>
-    <div class="todo__wrapper">
+    <div class="todo__wrapper__project">
 
     </div>
 
@@ -36,10 +25,6 @@
         <input type="color" id="form__color">
     </div>
     <input type="hidden" name="todoID" value='' id='todoID'>
-    <div class="share">
-        <p style='font-family: Poppins; color: white; font-size: 1em;'>Partager la tâche</p>
-        <input type="text" name="share" id="share" value='http://todolist.test/share/uid'>
-    </div>
     <div class="delete">
         <a id='deleteTask' id='delete__todo'>Supprimer la tâche</a>
     </div>
@@ -68,7 +53,7 @@ echo '</script>';
 
         });
 
-        $('.todo__wrapper').sortable({
+        $('.todo__wrapper__project').sortable({
             axis: 'y',
             update: function (event, ui) {
                 var updatedOrder = $(this).sortable('toArray', { attribute: 'data-order' });
@@ -155,7 +140,7 @@ echo '</script>';
 
         function updateTodoOrder(todoID, newPosition) {
             var updatedOrderData = {};
-            $('.todo__wrapper .todo__items').each(function (index) {
+            $('.todo__wrapper__project .todo__items').each(function (index) {
                 var taskId = $(this).data('id');
                 updatedOrderData[taskId] = index;
             });
@@ -336,7 +321,7 @@ echo '</script>';
 
     // RENDER LES TODOS AVEC LA REPONSE EN PARAMETRE
     function renderTodoList(data) {
-        var todoWrapper = $('.todo__wrapper');
+        var todoWrapper = $('.todo__wrapper__project');
         todoWrapper.empty();
         if (data.type !== "noTodo" && data.type !== "NotAllowed") {
             if (data != null) {

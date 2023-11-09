@@ -13,6 +13,92 @@
     padding-bottom: 40px;
     border-bottom: 1px solid var(--text-color);
 }
+
+.project__title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.project__int {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: var(--text-color);
+    cursor: pointer;
+}
+
+.project__int > i {
+    padding: 0 5px;
+    width: fit-content;
+    color: var(--text-color);
+}
+
+#project__int {
+    font-family: Poppins;
+}
+
+.project__waiting__content {
+    position: relative;
+}
+.project__waiting__container {
+    position: absolute;
+    right: 0;
+    display: none;
+    background: var(--background-secondary);
+    border: 1px solid black;
+    width: 200px;
+    height: 200px;
+    padding: 10px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    overflow:auto;
+}
+
+.project__waiting__title {
+    font-family: Poppins;
+    color: black;
+    font-weight: bold;
+}
+.project__waiting__wrapper {
+    display: grid;
+    grid-auto-rows: auto;
+    overflow: auto;
+}
+
+.project__waiting__container::-webkit-scrollbar {
+    width: 7px;
+}
+
+.project__waiting__container::-webkit-scrollbar-thumb {
+    background: var(--text-color);
+    border-radius: 30px;
+}
+
+.project__waiting__item{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    font-family: Poppins;
+    color: black;
+}
+
+.project__waiting__choose {
+    display: flex;
+    flex-direction: row;
+}
+
+.fa-check, .fa-xmark{
+    padding: 0;
+}
+
+.project__waiting__item span {
+    cursor: pointer;
+}
+
+
+
 .addTaskButton {
     cursor: pointer;
     justify-self: center;
@@ -123,3 +209,4 @@
     color: var(--background-secondary);
     cursor: pointer;
 }
+

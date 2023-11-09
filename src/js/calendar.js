@@ -80,20 +80,19 @@ $(document).ready(function () {
 function addEvent() {
   let currentDate = new Date();
   currentDate = formatDate(currentDate);
-  console.log("clické");
   createsForm(currentDate);
 }
 
 function createsForm(date) {
-  $(".form").empty();
+  $(".addTask").empty();
   let form = $("<form id='addTask' method='POST'></form>");
-
+  let title = $("<p class='addTaskTitle'>Créer une tâche</p>");
   let dateAndHour = date;
-  let dateAndHourDiv = $(
-    "<div class='form__hour'><p>Date et jour de l'évenèment </p><p class='form__hour__content'>" +
-      date +
-      "</p></div>"
-  );
+  // let dateAndHourDiv = $(
+  //   "<div class='form__hour'><p>Date et jour de l'évenèment </p><p class='form__hour__content'>" +
+  //     date +
+  //     "</p></div>"
+  // );
   let dateAndHourInput = $(
     "<input type='hidden' id='dateHidden' value=" + dateAndHour + ">"
   );
@@ -102,9 +101,8 @@ function createsForm(date) {
       "<input type='text' placeholder='Entrer le nom de l évènement...' name='eventName' id='name' autocomplete='off'>"
     ),
     description: $("<textarea name='description' id='description'></textarea>"),
-    submit: $("<input type='submit'>"),
+    submit: $("<input type='submit' value='Créer une tâche'>"),
   };
-  let div = ".addTask";
   let close = $(
     `<a class='form__close' onclick='hideForm()'><i class='fa-solid fa-xmark'></i></a>`
   );
@@ -112,9 +110,9 @@ function createsForm(date) {
   $(".addTask").css("display", "block");
 
   form.append(close);
-  form.append(inputs.name);
-  form.append(dateAndHourDiv);
+  form.append(title);
   form.append(dateAndHourInput);
+  form.append(inputs.name);
   form.append(inputs.description);
   form.append(inputs.submit);
   $(".addTask").append(form);

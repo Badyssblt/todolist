@@ -53,3 +53,8 @@ form {
     background: none;
     color: var(--text-color);
 }
+
+.errors__content {
+    display: flex;
+    justify-content: center;
+}

@@ -1,5 +1,6 @@
 $(document).ready(function () {
   updateProject();
+  updateWaitingProject();
 });
 
 function updateProject() {
@@ -9,7 +10,6 @@ function updateProject() {
     dataType: "JSON",
     success: function (response) {
       renderProject(response);
-      console.log(response);
     },
   });
 }
@@ -50,7 +50,6 @@ $("#close__form").click(function () {
 });
 
 // Créer un projet au clique de submit du formulaire
-
 function createProject() {
   let name = $("#name").val();
   if (name.length != 0) {
@@ -61,7 +60,8 @@ function createProject() {
         name: name,
       },
       success: function (response) {
-        console.log(response);
+        updateProject();
+        $(".project__form").hide();
       },
       error: function (jqXHR) {
         console.log(jqXHR);
@@ -70,8 +70,76 @@ function createProject() {
   }
 }
 
+function updateWaitingProject() {
+  $.ajax({
+    type: "POST",
+    url: "/getProjectWaitingByUser",
+    data: {},
+    dataType: "JSON",
+    success: function (response) {
+      renderWaitingProject(response);
+    },
+    error: function (jqXHR) {
+      console.log(jqXHR);
+    },
+  });
+}
+
+function renderWaitingProject(data) {
+  $("#project__int").text(data.length);
+  if (data.length > 0) {
+    $(".project__waiting__wrapper").empty();
+    for (let i = 0; i < data.length; i++) {
+      let item = data[i];
+      let itemDiv = `
+      <div class='project__waiting__item'>
+        <p>${item.project_name}</p>
+        <div class="project__waiting__choose">
+          <span class='project__waiting__choosen' data-projectID='${item.project_id}' data-int='1'><i class='fas fa-check'></i></span>
+          <span class='project__waiting__choosen' data-projectID='${item.project_id}' data-int='0'><i class='fas fa-xmark'></i></span>
+        </div>
+      </div>`;
+      $(".project__waiting__wrapper").append(itemDiv);
+    }
+  } else {
+    let message = $("<p>Vous n'avez aucune demande de projet</p>");
+    $(".project__waiting__wrapper").append(message);
+  }
+}
+
 $(".project__form").submit(function (e) {
   e.preventDefault();
   createProject();
   console.log("test");
+});
+
+$(document).on("click", ".project__int", function () {
+  $(".project__waiting__container").toggle();
+});
+
+// Fonction pour gérer acceptation invitation projets
+function updateInvit(projectID, choose) {
+  $.ajax({
+    type: "POST",
+    url: "/updateProjectWaiting",
+    data: {
+      projectID: projectID,
+      choose: choose,
+    },
+    dataType: "JSON",
+    success: function (response) {
+      $(".project__waiting__wrapper").empty();
+      updateWaitingProject();
+      updateProject();
+    },
+    error: function (jqXHR) {
+      console.log(jqXHR);
+    },
+  });
+}
+
+$(document).on("click", ".project__waiting__choosen", function () {
+  let projectID = $(this).attr("data-projectID");
+  let choose = $(this).attr("data-int");
+  updateInvit(projectID, choose);
 });
