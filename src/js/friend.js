@@ -20,7 +20,6 @@ $(document).ready(() => {
 
   function renderFriend(data) {
     $(".friends__wrapper").empty();
-    console.log(data);
     for (let i = 0; i < data.length; i++) {
       let item = `<div class="friend" data-friendID='${data[i].friend_id}'>
       <div class="img__container">
