@@ -18,6 +18,7 @@ class Friend
         $this->friends = new Friends;
     }
 
+
     public function searchFriends()
     {
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
@@ -45,9 +46,41 @@ class Friend
                 [
                     'user1' => $userID,
                     'user2' => $friendID,
-                    "state" => self::STATE_WAITING
+                    "state" => self::STATE_WAITING,
+                    "requester" => $userID
                 ];
             $res = $this->friends->addFriends($data);
+            if ($res) {
+                $response =
+                    [
+                        "message" => "ami ajoute"
+                    ];
+            } else {
+                $response =
+                    [
+                        "message" => "ami non ajoute"
+                    ];
+            }
+            echo json_encode($response);
+        }
+    }
+
+    public function getFriendWaiting()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $userID = $_POST['userID'];
+            $res = $this->friends->getFriendsWaiting($userID);
+            echo json_encode($res);
+        }
+    }
+
+    public function acceptFriend()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $userID = $_POST['userID'];
+            $friendID = $_POST['friendID'];
+            $state = self::STATE_ACCEPT;
+            $res = $this->friends->acceptFriend($userID, $friendID, $state);
             if ($res) {
                 $response =
                     [

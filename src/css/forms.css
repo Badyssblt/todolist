@@ -1,25 +1,61 @@
 .form, .addTask, .parameter {
     z-index: 30;
     width: 400px;
-    height: 500px;
+    height: fit-content;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: var(--background-calendar);
+    background: var(--background-secondary);
     padding: 10px;
     border-radius: 10px;
 }
 
+.addTask {
+  border: 1px solid black;
+  outline: none;
+}
 
+.addTaskTitle {
+  font-family: Poppins;
+  font-weight: bold;
+  font-size: 1.2em;
+  justify-self: center;
+}
+
+#addTask {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#addTask  input{
+  background-color: var(--text-color);
+  color: white;
+  border-radius: 20px;
+}
+
+
+#addTask textarea {
+  padding: 10px;
+  background-color: var(--text-color);
+  border: none;
+  height: fit-content;
+  border-radius: 10px;
+  outline: none;
+  resize: none;
+  font-family: Poppins;
+  color: white;
+}
 .form__class {
     height: 30px;
 }
 
 .form__title {
     font-family: Poppins;
-    color: white;
+    color:  black;
     font-weight: bold;
+    font-size: 1.2em;
 }
   
 input {
@@ -79,7 +115,8 @@ input::placeholder{
 
 .parameter {
   display: grid;
-  grid-template-rows:  30px 40px 120px 80px 60px 60px;
+  height: fit-content;
+  border: 1px solid black;
 }
 
 #deleteTask {
@@ -101,7 +138,11 @@ input::placeholder{
 }
 
 .fa-xmark {
-  color: white;
+  color: black;
+  position: absolute;
+  right: 10px;
+  font-size: 1.2em;
+  cursor: pointer;
 }
 
 .todo__filter {

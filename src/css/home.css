@@ -1,16 +1,14 @@
-
 main {
     width: 100%;
     min-height: 100vh;
     display: grid;
-    grid-template-columns: 380px 50% 40%;
+    grid-template-columns: 20% 50% 30%;
     background: var(--background-color);
 }
 
 aside {
     background: var(--text-color);
-    border: 1px solid black;
-    width: 360px;
+    width: 100%;
 }
 
 .nav__title {

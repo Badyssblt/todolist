@@ -12,6 +12,9 @@
 }
 
 .friends__top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     width: 85%;
     height: fit-content;
     justify-self: center;
@@ -20,11 +23,41 @@
     border-bottom: 1px solid rgba(0, 0, 0, .2);
 }
 
+.fa-bell {
+    color: var(--background-secondary);
+}
+
+.friends__top__bell {
+    position: relative;
+}
+
+.bell__notif {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.bell__menu {
+    display: none;
+    z-index: 20;
+    background: var(--background-secondary);
+    position: absolute;
+    left: -120px;
+    flex-direction: column;
+    padding: 10px;
+    border-radius: 20px;
+    color: black;
+}
+
+.add__friend {
+    z-index: 30;
+}
+
 .friends__form {
     display: none;
     flex-direction: row;
     position: absolute;
-    width: 200px;
+    width: 100%;
     height: 100px;
     top: 40px;
     left: 20px;
@@ -37,9 +70,24 @@
     padding-left: 10px;
 }
 
+.friends__form >input[type="submit"]{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    padding: 0;
+    width: 100px;
+    border-radius: 20px;
+    background: white;
+    font-family: Poppins;
+    border: 1px solid black;
+}
+
 #friend__name {
     border-radius: 30px;
     background-color: var(--background-secondary);
+    font-family: Poppins;
+    outline: none;
+    border: 1px solid black;
 }
 
 .friends__wrapper {
@@ -52,11 +100,28 @@
     height: fit-content;
 }
 
+
 .friend {
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: fit-content;
+
 }
 
+.waiting {
+    width: 150px;
+    justify-content: space-between;
+    z-index: 20;
+}
+
+
+.friend__info {
+    display: flex;
+    flex-direction: row;
+
+}
 .img__container {
     width: 50px;
     height: 50px;
@@ -68,12 +133,26 @@
     height: 100%;
 }
 
+.friend__info__name {
+    display: flex;
+    flex-direction: column;
+}
+
+.friend__info__name p {
+    height: fit-content;
+    margin: 0;
+}
+
+.friend__info__name p:last-child {
+    font-size: .7em;
+}
+
 .friends__add {
     position: relative;
     display: flex;
     justify-content: center;
     align-self: center;
-    height: 60px;
+    height: fit-content;
 }
 
 .friends__add__button {
@@ -85,7 +164,7 @@
     justify-self: center;
     border-radius: 30px;
     border: 3px solid var(--background-secondary);
-    font-size: .8em;
+    font-size: .9em;
     user-select: none;
 }
 
@@ -93,14 +172,14 @@
     cursor: pointer;
 }
 
-.friends__add__form {
-    display: none;
-}
-
 
 #add__friend {
+    cursor: pointer;
+    padding: 5px;
+    margin-right: 10px;
+    font-size: .8em;
     background: var(--background-secondary);
     color: black;
-    padding: 5px;
     border-radius: 30px;
 }
+

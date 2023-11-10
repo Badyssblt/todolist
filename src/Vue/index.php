@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="./css/index.css">
     <title>Accueil</title>
 </head>
+
 <body>
     <header>
         <menu id='nav'>
@@ -14,7 +16,16 @@
                 <h1 id='menu__title'>TaskManager</h1>
             </div>
             <div class="menu__items">
-                <li><a href="/register" class='menu__item'>S'insrire</a></li>
+                <?php
+                if (isset($_SESSION['ID'])) { ?>
+                    <a href="/home" class='menu__item__account'>Mon dashboard</a>
+                    <?php
+                } else { ?>
+                    <li><a href="/register" class='menu__item'>S'insrire</a></li>
+
+                    <?php
+                }
+                ?>
             </div>
         </menu>
     </header>
@@ -36,4 +47,5 @@
 
     </section>
 </body>
+
 </html>
