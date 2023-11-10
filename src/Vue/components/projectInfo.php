@@ -6,6 +6,12 @@
     <div class="participation__wrapper">
 
     </div>
+    <div class="participations__delete">
+        <p style='font-family: Poppins; font-weight: bold; font-size: .9em'>Voulez vous supprimer ce participant du
+            projet ?</p>
+        <button class='participations__delete__accept'>Supprimer</button>
+        <button class='participations__delete__denied'>Annuler</button>
+    </div>
 </div>
 <div class="participations__form">
     <?php require('./Vue/components/friendProject.php'); ?>

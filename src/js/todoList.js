@@ -88,8 +88,8 @@ $(document).ready(() => {
       );
     }
   }
-  // Initialise au chargement les todos de l'utilisateurs
 
+  // Initialise au chargement les todos de l'utilisateurs
   function updateTodoList() {
     $.ajax({
       type: "GET",
@@ -117,7 +117,7 @@ $(document).ready(() => {
           var categoryHtml =
             item.categoryName !== null
               ? "<p>" + item.categoryName + "</p>"
-              : '<p onclick="defineCategory(' +
+              : '<p  style="font-size: .9em;" onclick="defineCategory(' +
                 item.id +
                 ', this)">Définir une catégorie</p>';
 
@@ -471,5 +471,4 @@ function gestionClicMasquage(elementProtected, divHidden) {
     event.stopPropagation();
   });
 }
-
 gestionClicMasquage(".todo__parameter", ".parameter");

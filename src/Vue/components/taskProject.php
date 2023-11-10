@@ -89,7 +89,6 @@ echo '</script>';
                 dataType: "JSON",
                 success: function (response) {
                     renderFilteredTodoList(response);
-                    console.log(response);
                 }, error: function (jqXHR) {
                     console.log(jqXHR);
                 }
@@ -102,7 +101,7 @@ echo '</script>';
         })
 
         function renderFilteredTodoList(filteredTodos) {
-            const todoWrapper = $('.todo__wrapper');
+            const todoWrapper = $('.todo__wrapper__project');
             todoWrapper.empty();
 
             if (filteredTodos != null) {
@@ -146,7 +145,7 @@ echo '</script>';
             });
             $.ajax({
                 type: "POST",
-                url: "/updateTodoOrder",
+                url: "/updateTodoOrderProject",
                 data: {
                     orderData: updatedOrderData
                 },
@@ -332,7 +331,7 @@ echo '</script>';
                         '<p>' + item.task_category + '</p>' :
                         '<p onclick="defineCategory(' + item.task_id + ', this)">Définir une catégorie</p>';
                     var todoHtml = `
-                                                                <div class="todo__items" data-id='${item.task_id}' data-order='${item.orderTodo}'>
+                                                                <div class="todo__items" data-id='${item.task_id}' data-order='${item.task_order}'>
                                                                     <button class="btn__check ${state ? 'check' : 'uncheck'}" data-id='${item.task_id}'></button>
                                                                     <div class='todo__name__content'>
                                                                         <p class="todo__name">${item.task_name}</p>

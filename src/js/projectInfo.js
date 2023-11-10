@@ -48,13 +48,13 @@ $(document).ready(() => {
         </p>
         </div>
       </div>
-      <p><i class="fas fa-ellipsis-v" style="color: #ffffff;"></i></p>
+      <p class='project__more'><i class="fas fa-ellipsis-v" style="color: #ffffff;"></i></p>
   </div>`;
       $(".participation__wrapper").append(divItem);
     }
   }
-  // Gère l'ajout d'un participant
 
+  // Gère l'ajout d'un participant
   $(document).on("click", "#addParticipantForm", function () {
     $(".participations__form").toggle();
   });
@@ -62,6 +62,9 @@ $(document).ready(() => {
     $(".participations__form__confirm").toggle();
     let friendID = $(this).closest(".friend").attr("data-friendID");
     $(".participations__form__confirm").attr("data-friendID", friendID);
+  });
+  $(document).on("click", "#participations__denied", function () {
+    $(".participations__form__confirm").hide();
   });
   $(document).on("click", "#participations__accept", function () {
     let friendID = $(this)
@@ -76,11 +79,15 @@ $(document).ready(() => {
       },
       dataType: "JSON",
       success: function (response) {
-        console.log(response);
+        $(".participations__form__confirm").hide();
       },
       error: function (jqXHR) {
         console.log(jqXHR);
       },
     });
   });
+});
+$(document).on("click", ".project__more", function () {
+  var deleteDiv = $(".participations__delete");
+  deleteDiv.toggle();
 });

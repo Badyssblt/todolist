@@ -1,9 +1,11 @@
 .participations {
-    width: 300px;
+    width: 100%;
+    max-width: 265px;
     height: 400px;
     background: var(--text-color);
     border-radius: 20px;
     align-self: center;
+    justify-self: center;
 }
 
 .participations__title {
@@ -106,4 +108,38 @@
     height: 35px;
     border-radius: 20px;
     font-size: 1em;
+}
+
+.participations__delete {
+    display: none;
+    position: absolute;
+    right: 0;
+    padding: 5px;
+    width: 200px;
+    height: 120px;
+    background: var(--background-secondary);
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+.participations__delete__accept {
+    padding: 5px;
+    background: var(--text-color);
+    color: white;
+    font-family: Poppins;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.participations__delete__denied {
+    padding: 5px;
+    border: 1px solid var(--text-color);
+    color: black;
+    background: none;
+    border-radius: 10px;
+    font-family: Poppins;
+    outline: none;
+    cursor: pointer;
 }

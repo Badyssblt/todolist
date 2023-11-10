@@ -1,17 +1,19 @@
 <div class="todo__all">
-    <!-- <div class="todo__filter">
-        <div class="filter__icon">
-            <i class="fas fa-search"></i>
-        </div>
-        <form id='search'>
-            <input type="text" name="name" id="todoName" placeholder="Nom de l'évenèment">
-            <select name="category" id="category">
-
-            </select>
-        </form>
-    </div> -->
     <div class="todo__top">
-        <p class="todo__title">Mes taches</p>
+        <div class="todo__top__container">
+            <p class="todo__title">Mes taches</p>
+            <div class="todo__filter">
+                <div class="filter__icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <form id='search'>
+                    <input type="text" name="name" id="todoName" placeholder="Nom de l'évenèment">
+                    <select name="category" id="category">
+
+                    </select>
+                </form>
+            </div>
+        </div>
         <a id='addTaskButton'>Ajouter une tâche</a>
     </div>
     <div class="todo__wrapper">

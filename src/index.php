@@ -33,6 +33,7 @@ $router->addRoutes('/uncheckEvent', [new Post(), "uncheck"]);
 $router->addRoutes('/addCategory', [new Post(), "createCategory"]);
 $router->addRoutes('/getCategory', [new Post(), "getCategory"]);
 $router->addRoutes('/updateTodoOrder', [new Post(), "changeOrder"]);
+$router->addRoutes('/updateTodoOrderProject', [new Projects(), "changeOrder"]);
 $router->addRoutes('/editTodo', [new Post(), "editTodo"]);
 $router->addRoutes("/deleteTodo", [new Post(), 'deleteTodo']);
 $router->addRoutes("/getTodo", [new Post(), "getTodo"]);

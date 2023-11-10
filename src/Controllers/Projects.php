@@ -119,6 +119,14 @@ class Projects
 
     }
 
+    public function changeOrder()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            $orderData = $_POST['orderData'];
+            $this->project->changeOrder($orderData);
+        }
+    }
+
 
 
 

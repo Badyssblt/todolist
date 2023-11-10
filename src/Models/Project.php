@@ -150,17 +150,20 @@ class Project extends Database
         if ($isUserInProject) {
             $userID = $_SESSION['ID'];
             $sql = "SELECT 
-            todo_projects.name AS task_name, 
-            todo_projects.ID AS task_id, 
-            todo_projects.state AS task_state, 
-            todo_projects.description AS task_description, 
-            todo_projects.owner AS task_owner, 
-            users.username AS owner_username,
-            categorydefault.name AS task_category
-        FROM todo_projects 
-        LEFT JOIN categorydefault ON todo_projects.category = categorydefault.ID 
-        INNER JOIN users ON todo_projects.owner = users.ID 
-        WHERE todo_projects.projectID = :projectID;";
+                todo_projects.name AS task_name, 
+                todo_projects.ID AS task_id, 
+                todo_projects.orderTodo as task_order,
+                todo_projects.state AS task_state, 
+                todo_projects.description AS task_description, 
+                todo_projects.owner AS task_owner, 
+                users.username AS owner_username,
+                categorydefault.name AS task_category
+            FROM todo_projects 
+            LEFT JOIN categorydefault ON todo_projects.category = categorydefault.ID 
+            INNER JOIN users ON todo_projects.owner = users.ID 
+            WHERE todo_projects.projectID = :projectID
+            ORDER BY todo_projects.orderTodo ASC;";
+
             $this->getConnection();
             $query = $this->connection->prepare($sql);
             $query->bindParam(':projectID', $projectID, \PDO::PARAM_INT);
@@ -195,6 +198,20 @@ class Project extends Database
                 "message" => "Event envoyé",
             ];
 
+        echo json_encode($response);
+    }
+
+    public function changeOrder($orderData): void
+    {
+
+        foreach ($orderData as $taskId => $newOrder) {
+            $this->getConnection();
+            $this->edit(['orderTodo' => $newOrder], $taskId);
+        }
+        $response =
+            [
+                "message" => $orderData
+            ];
         echo json_encode($response);
     }
 
@@ -268,7 +285,6 @@ class Project extends Database
             $projectID = $_POST['projectID'];
 
             if (isset($_SESSION['ID'])) {
-                // Vérifie si l'utilisateur n'est pas déjà dans le projet
                 $isUserInProject = $this->checkUserInProject($friendID, $projectID);
 
                 if ($isUserInProject) {
