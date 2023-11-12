@@ -4,14 +4,16 @@ namespace Controllers;
 
 use Models\Friends;
 use Models\User;
-
+use Models\Database;
 
 class Login
 {
     private Friends $friends;
     public function __construct()
     {
+        Database::getInstance();
         $this->friends = new Friends();
+        
     }
     public function index()
     {

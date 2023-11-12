@@ -6,26 +6,43 @@ use \PDO;
 
 class Database
 {
-    private string $host = "mysql";
-    private string $dbname = "todo";
-    private string $username = "test";
-    private string $password = "pass";
+    private const host = "mysql";
+    private const dbname = "todo";
+    private const username = "test";
+    private const password = "pass";
 
-    protected $connection;
+    protected static $connection;
+    private static $instance;
 
     public $table;
     public $id;
 
-    // Connexion à la base de donnée
-    public function getConnection()
-    {
-        $this->connection = null;
 
-        try {
-            $this->connection = new PDO('mysql:host=' . $this->host . '; dbname=' . $this->dbname, $this->username, $this->password);
-        } catch (\PDOException $e) {
-            throw $e;
+    protected function __construct()
+    {
+        $this->getConnection();
+    }
+
+    // Connexion à la base de donnée
+    public static function getConnection()
+    {
+        if (self::$connection === null) {
+            try {
+                self::$connection = new PDO('mysql:host=' . self::host . '; dbname=' . self::dbname, self::username, self::password);
+            } catch (\PDOException $e) {
+                throw $e;
+            }
         }
+        return self::$connection;
+    }
+
+    public static function getInstance(): self
+    {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
     }
 
     // Obtient toutes les lignes d'une table
@@ -45,7 +62,7 @@ class Database
             throw new \Exception("Table name not set.");
         }
 
-        $query = $this->connection->prepare($sql);
+        $query = self::getConnection()->prepare($sql);
 
         foreach ($columns as $columnName => $columnValue) {
             if (is_int($columnValue)) {

@@ -5,6 +5,11 @@ namespace Models;
 class Project extends Database
 {
     public $table = "todo_projects";
+
+    public function __construct(){
+        parent::__construct();
+        
+    }
     public function getProjectByUser()
     {
         if ($_SESSION) {

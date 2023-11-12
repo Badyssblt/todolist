@@ -7,6 +7,10 @@ class Friends extends Database
 
     public $table = 'friends';
 
+    public function __construct(){
+        parent::__construct();
+    }
+
     public function updateOnlineStatus($userID, $isOnline)
     {
         $this->getConnection();

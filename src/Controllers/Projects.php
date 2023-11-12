@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use \Models\Project;
+use \Models\Database;
 
 class Projects
 {
