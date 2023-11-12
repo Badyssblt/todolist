@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  web:
+    build: .
+    ports:
+      - "8080:80"
+    depends_on:
+      - mysql
+    volumes:
+      - ./src:/var/www/html/src
+      - ./vendor:/var/www/html/vendor
+  mysql:
+    image: mysql:8
+    container_name: mysql8
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: pass
+      MYSQL_DATABASE: todo
+      MYSQL_USER: test
+      MYSQL_PASSWORD: pass
+    ports:
+      - 3307:3306
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      PMA_ARBITRARY: 1
+      PMA_HOST: mysql
+      PMA_USER: test
+      PMA_PASSWORD: pass
+    ports:
+      - 8899:80

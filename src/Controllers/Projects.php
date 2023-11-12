@@ -127,6 +127,17 @@ class Projects
         }
     }
 
+    public function addCategoryProject()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            $id = $_POST['todoID'];
+            $data =
+                [
+                    'category' => $_POST['categoryID'],
+                ];
+            $this->project->addCategoryProject($data, $id);
+        }
+    }
 
 
 

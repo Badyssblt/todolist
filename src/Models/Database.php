@@ -6,10 +6,10 @@ use \PDO;
 
 class Database
 {
-    private string $host = "localhost";
+    private string $host = "mysql";
     private string $dbname = "todo";
-    private string $username = "root";
-    private string $password = "";
+    private string $username = "test";
+    private string $password = "pass";
 
     protected $connection;
 

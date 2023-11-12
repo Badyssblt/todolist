@@ -246,7 +246,7 @@ $(document).ready(() => {
     let todoID = $("#todoID").val();
     $.ajax({
       type: "POST",
-      url: "/addCategory",
+      url: "/addCategoryP",
       data: {
         categoryID: categoryID,
         todoID: todoID,

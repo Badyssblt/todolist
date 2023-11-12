@@ -188,13 +188,14 @@ echo '</script>';
                 let todoID = $("#todoID").val();
                 $.ajax({
                     type: "POST",
-                    url: "/addCategory",
+                    url: "/addCategoryProject",
                     data: {
                         categoryID: categoryID,
                         todoID: todoID
                     },
                     success: function (response) {
                         updateTodoList();
+                        console.log(response);
                     }, error: function (jqXHR) {
                         console.log(jqXHR);
                     }

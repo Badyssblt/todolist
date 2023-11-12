@@ -323,5 +323,16 @@ class Project extends Database
         }
     }
 
+    public function addCategoryProject($data, $id)
+    {
+        $this->getConnection();
+        $this->edit($data, $id);
+        $response =
+            [
+                "message" => "Categorie cree"
+            ];
+        echo json_encode($response);
+    }
+
 
 }

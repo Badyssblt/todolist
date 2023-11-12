@@ -73,4 +73,27 @@ li > i {
 }
 
 
+@media only screen and (max-width: 600px) {
+    main {
+        display: flex;
+        flex-direction: column;
+    }
 
+    .parameter {
+        width: 300px !important;
+    }
+
+
+    .addTask {
+        width: 300px !important;
+    }
+
+    .friends__content {
+        margin: 0 auto;
+    }
+    
+
+    .nav__title {
+        display: none;
+    }
+  }

@@ -71,6 +71,7 @@
     position: relative;
     display: grid;
     grid-template-columns: 10% 62% 28%;
+    grid-template-rows: 80% 20%;
     padding: 10px;
     border-radius: 15px;
     font-family: var(--font-todo);
@@ -90,6 +91,10 @@
 .todo__description__title {
     font-weight: bold;
     font-family: Poppins;
+}
+
+.todo__category {
+    height: fit-content;
 }
 
 .todo__category p {

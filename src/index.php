@@ -54,7 +54,7 @@ $router->addRoutes('/getProjectByID', [new Projects(), "getProjectNameById"]);
 $router->addRoutes('/addUserInProject', [new Projects(), 'addUserInProject']);
 $router->addRoutes('/getProjectWaitingByUser', [new Projects(), 'getProjectWaitingByUser']);
 $router->addRoutes('/updateProjectWaiting', [new Projects(), "updateInvit"]);
-
+$router->addRoutes('/addCategoryProject', [new Projects(), "addCategoryProject"]);
 
 // Gère l'URL avec $path et applique la méthode handleRequest
 $router->handleRequest($path);
