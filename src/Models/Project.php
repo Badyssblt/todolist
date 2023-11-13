@@ -2,13 +2,16 @@
 
 namespace Models;
 
+use \PDO;
+
 class Project extends Database
 {
     public $table = "todo_projects";
 
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
-        
+
     }
     public function getProjectByUser()
     {
@@ -29,7 +32,7 @@ class Project extends Database
         GROUP BY projects.ID;";
 
                 $this->getConnection();
-                $query = $this->connection->prepare($sql);
+                $query = self::$connection->prepare($sql);
                 $query->bindParam(':userID', $userID, \PDO::PARAM_INT);
                 $query->execute();
                 return $query->fetchAll();
@@ -44,7 +47,7 @@ class Project extends Database
             if ($choose == 1) {
                 $sql = 'UPDATE participation SET state = :state WHERE userID = :userID AND projectID = :projectID';
                 $this->getConnection();
-                $query = $this->connection->prepare($sql);
+                $query = self::$connection->prepare($sql);
                 $query->bindParam(':state', $choose);
                 $query->bindParam(':userID', $userID);
                 $query->bindParam(':projectID', $projectID);
@@ -65,7 +68,7 @@ class Project extends Database
             } else if ($choose == 0) {
                 $sql = "DELETE FROM participation WHERE userID = :userID AND projectID = :projectID";
                 $this->getConnection();
-                $query = $this->connection->prepare($sql);
+                $query = self::$connection->prepare($sql);
                 $query->bindParam(':userID', $userID);
                 $query->bindParam(':projectID', $projectID);
                 $res = $query->execute();
@@ -114,7 +117,7 @@ class Project extends Database
         GROUP BY projects.ID;";
 
                 $this->getConnection();
-                $query = $this->connection->prepare($sql);
+                $query = self::$connection->prepare($sql);
                 $query->bindParam(':userID', $userID, \PDO::PARAM_INT);
                 $query->execute();
                 return $query->fetchAll();
@@ -126,7 +129,7 @@ class Project extends Database
     {
         $sql = "SELECT name FROM projects WHERE ID = :projectId";
         $this->getConnection();
-        $query = $this->connection->prepare($sql);
+        $query = self::$connection->prepare($sql);
         $query->bindParam(':projectId', $projectId, \PDO::PARAM_INT);
         $query->execute();
         $result = $query->fetchColumn();
@@ -138,7 +141,7 @@ class Project extends Database
     {
         $sql = "SELECT COUNT(*) FROM participation WHERE userID = :userID AND projectID = :projectID;";
         $this->getConnection();
-        $query = $this->connection->prepare($sql);
+        $query = self::$connection->prepare($sql);
         $query->bindParam(':userID', $userID, \PDO::PARAM_INT);
         $query->bindParam(':projectID', $projectID, \PDO::PARAM_INT);
         $query->execute();
@@ -170,7 +173,7 @@ class Project extends Database
             ORDER BY todo_projects.orderTodo ASC;";
 
             $this->getConnection();
-            $query = $this->connection->prepare($sql);
+            $query = self::$connection->prepare($sql);
             $query->bindParam(':projectID', $projectID, \PDO::PARAM_INT);
             $query->execute();
             $todos = $query->fetchAll();
@@ -196,7 +199,7 @@ class Project extends Database
 
     public function postEventProject($data)
     {
-        $this->getConnection();
+        self::getConnection();
         $this->insertData($data);
         $response =
             [
@@ -210,7 +213,7 @@ class Project extends Database
     {
 
         foreach ($orderData as $taskId => $newOrder) {
-            $this->getConnection();
+            self::getConnection();
             $this->edit(['orderTodo' => $newOrder], $taskId);
         }
         $response =
@@ -222,19 +225,20 @@ class Project extends Database
 
     public function getUserInProject()
     {
-        $this->getConnection();
+        self::getConnection();
         $projectID = $_POST['projectID'];
-        $sql = "SELECT * FROM participation INNER JOIN users ON participation.userID = users.ID WHERE projectID = :projectID AND state = 1";
-        $query = $this->connection->prepare($sql);
-        $query->bindParam(':projectID', $projectID);
+        $sql = "SELECT users.* FROM participation INNER JOIN users ON participation.userID = users.ID WHERE projectID = :projectID AND state = 1";
+        $query = self::$connection->prepare($sql);
+        $query->bindParam(':projectID', $projectID, PDO::PARAM_INT);
         $query->execute();
         $users = $query->fetchAll(\PDO::FETCH_ASSOC);
         return $users;
     }
 
+
     public function checkEvent($data, $id)
     {
-        $this->getConnection();
+        self::getConnection();
         $this->edit($data, $id);
         $response =
             [
@@ -245,40 +249,40 @@ class Project extends Database
 
     public function createProject($name)
     {
-        $this->getConnection();
+        self::getConnection();
 
         try {
-            $this->connection->beginTransaction();
+            self::$connection->beginTransaction();
 
             $sql = "INSERT INTO projects VALUES(0, :name, :description, :owner)";
-            $query = $this->connection->prepare($sql);
+            $query = self::$connection->prepare($sql);
             $req = $query->execute(array("name" => $name, "description" => "", "owner" => $_SESSION['ID']));
 
             if ($req) {
-                $projectId = $this->connection->lastInsertId();
+                $projectId = self::$connection->lastInsertId();
 
                 $sqlParticipation = "INSERT INTO participation VALUES(0, :userID, :projectID, :state)";
-                $queryParticipation = $this->connection->prepare($sqlParticipation);
+                $queryParticipation = self::$connection->prepare($sqlParticipation);
 
                 $reqParticipation = $queryParticipation->execute(array("userID" => $_SESSION['ID'], "projectID" => $projectId, "state" => 1));
 
                 if ($reqParticipation) {
-                    $this->connection->commit();
+                    self::$connection->commit();
                     $response = [
                         'message' => 'Projet créé',
                         "ok" => true
                     ];
                     return $response;
                 } else {
-                    $this->connection->rollBack();
+                    self::$connection->rollBack();
                     return false;
                 }
             } else {
-                $this->connection->rollBack();
+                self::$connection->rollBack();
                 return false;
             }
         } catch (\PDOException $e) {
-            $this->connection->rollBack();
+            self::$connection->rollBack();
             return false;
         }
     }
@@ -300,8 +304,8 @@ class Project extends Database
                         ];
                 } else {
                     $sql = "INSERT INTO participation VALUES(0, :userID, :projectID, 0)";
-                    $this->getConnection();
-                    $query = $this->connection->prepare($sql);
+                    self::getConnection();
+                    $query = self::$connection->prepare($sql);
                     $res = $query->execute(array("userID" => $friendID, "projectID" => $projectID));
 
                     if ($res) {
@@ -330,7 +334,7 @@ class Project extends Database
 
     public function addCategoryProject($data, $id)
     {
-        $this->getConnection();
+        self::getConnection();
         $this->edit($data, $id);
         $response =
             [

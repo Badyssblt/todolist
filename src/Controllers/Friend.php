@@ -28,11 +28,11 @@ class Friend
         }
     }
 
-    public function getFriend()
+    public function getFriendWaiting()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $userID = $_POST['userID'];
-            $res = $this->friends->getFriends($userID);
+            $res = $this->friends->getFriendsAndPending($userID);
             echo json_encode($res);
         }
     }
@@ -65,14 +65,6 @@ class Friend
         }
     }
 
-    public function getFriendWaiting()
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $userID = $_POST['userID'];
-            $res = $this->friends->getFriendsWaiting($userID);
-            echo json_encode($res);
-        }
-    }
 
     public function acceptFriend()
     {

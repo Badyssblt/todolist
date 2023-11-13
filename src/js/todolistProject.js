@@ -53,28 +53,28 @@ $(document).ready(() => {
           }' data-order='${
             item.orderTodo
           }' style='background: ${color}; color: ${textColor}'>
-                                                            <button class="btn__check ${
-                                                              state
-                                                                ? "check"
-                                                                : "uncheck"
-                                                            }" data-id='${
+                                                              <button class="btn__check ${
+                                                                state
+                                                                  ? "check"
+                                                                  : "uncheck"
+                                                              }" data-id='${
             item.id
           }'></button>
-                                                            <p class="todo__name">${
-                                                              item.name
-                                                            }</p>
-                                                            <div class="todo__category">${categoryHtml}</div>
-                                                            <div class="todo__description">
-                                                                <p class="todo__description todo__description__title hidden">Description : </p>
-                                                                <p class="todo__description hidden">${
-                                                                  item.description
-                                                                }</p>
-                                                            </div>
-                                                            <div class='todo__parameter'><i class='fas fa-gear'></i></div>
-                                                            <button class="btn__more">
-                                                                <i class="fas fa-angle-down close"></i>
-                                                            </button>
-                                                        </div>`;
+                                                              <p class="todo__name">${
+                                                                item.name
+                                                              }</p>
+                                                              <div class="todo__category">${categoryHtml}</div>
+                                                              <div class="todo__description">
+                                                                  <p class="todo__description todo__description__title hidden">Description : </p>
+                                                                  <p class="todo__description hidden">${
+                                                                    item.description
+                                                                  }</p>
+                                                              </div>
+                                                              <div class='todo__parameter'><i class='fas fa-gear'></i></div>
+                                                              <button class="btn__more">
+                                                                  <i class="fas fa-angle-down close"></i>
+                                                              </button>
+                                                          </div>`;
           todoWrapper.append(todoHtml);
         });
       } else {
@@ -88,21 +88,6 @@ $(document).ready(() => {
       );
     }
   }
-
-  // Initialise au chargement les todos de l'utilisateurs
-  function updateTodoList() {
-    $.ajax({
-      type: "GET",
-      url: "/home",
-      success: function (response) {
-        renderTodoList(response);
-      },
-      error: function (error) {
-        console.log(error);
-      },
-    });
-  }
-  updateTodoList();
 
   // Gère l'affichage des todos
   function renderTodoList(data) {
@@ -122,38 +107,38 @@ $(document).ready(() => {
                 ', this)">Définir une catégorie</p>';
 
           var todoHtml = `
-                                                            <div class="todo__items" data-id='${
-                                                              item.id
-                                                            }' data-order='${
+                                                              <div class="todo__items" data-id='${
+                                                                item.id
+                                                              }' data-order='${
             item.orderTodo
           }' style='background: ${color}; color: ${textColor}'>
-                                                                <button class="btn__check ${
-                                                                  state
-                                                                    ? "check"
-                                                                    : "uncheck"
-                                                                }" data-id='${
+                                                                  <button class="btn__check ${
+                                                                    state
+                                                                      ? "check"
+                                                                      : "uncheck"
+                                                                  }" data-id='${
             item.id
           }'></button>
-                                                                <p class="todo__name">${
-                                                                  item.name
-                                                                }</p>
-                                                                <div class="todo__category">${categoryHtml}</div>
-                                                                <div class="todo__description">
-                                                                    <p class="todo__description todo__description__title hidden">Description : </p>
-                                                                    <p class="todo__description hidden">${
-                                                                      item.description
-                                                                    }</p>
-                                                                </div>
-                                                                <div class='todo__parameter'><i class='fas fa-gear'></i></div>
-                                                                ${
-                                                                  item
-                                                                    .description
-                                                                    .length !==
-                                                                  0
-                                                                    ? `<button class="btn__more"><i class="fas fa-angle-down close"></i></button>`
-                                                                    : ""
-                                                                }
-                                                            </div>`;
+                                                                  <p class="todo__name">${
+                                                                    item.name
+                                                                  }</p>
+                                                                  <div class="todo__category">${categoryHtml}</div>
+                                                                  <div class="todo__description">
+                                                                      <p class="todo__description todo__description__title hidden">Description : </p>
+                                                                      <p class="todo__description hidden">${
+                                                                        item.description
+                                                                      }</p>
+                                                                  </div>
+                                                                  <div class='todo__parameter'><i class='fas fa-gear'></i></div>
+                                                                  ${
+                                                                    item
+                                                                      .description
+                                                                      .length !==
+                                                                    0
+                                                                      ? `<button class="btn__more"><i class="fas fa-angle-down close"></i></button>`
+                                                                      : ""
+                                                                  }
+                                                              </div>`;
 
           todoWrapper.append(todoHtml);
         });

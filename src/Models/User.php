@@ -37,7 +37,7 @@ class User extends Database
         }
 
         $sql = "SELECT * FROM {$this->table} WHERE email = :email";
-        $query = $this->connection->prepare($sql);
+        $query = self::$connection->prepare($sql);
 
         $query->bindParam(':email', $email);
 

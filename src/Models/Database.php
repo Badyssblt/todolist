@@ -49,7 +49,7 @@ class Database
     public function getAll(): array
     {
         $sql = "SELECT * FROM " . $this->table;
-        $query = $this->connection->prepare($sql);
+        $query = self::$connection->prepare($sql);
         $query->execute();
         return $query->fetchAll();
 
@@ -88,7 +88,7 @@ class Database
         }
 
         $sql = "SELECT * FROM {$this->table} WHERE id = :id";
-        $query = $this->connection->prepare($sql);
+        $query = self::$connection->prepare($sql);
 
         $query->bindParam(':id', $id);
 
@@ -109,7 +109,7 @@ class Database
         $values = ':' . implode(', :', array_keys($data));
 
         $sql = "INSERT INTO {$this->table} ($columns) VALUES ($values)";
-        $query = $this->connection->prepare($sql);
+        $query = self::$connection->prepare($sql);
 
         foreach ($data as $key => $value) {
             $query->bindValue(':' . $key, $value);
@@ -137,7 +137,7 @@ class Database
         $values = ':' . implode(', :', array_keys($data));
 
         $sql = "INSERT INTO {$this->table} ($columns) VALUES ($values)";
-        $query = $this->connection->prepare($sql);
+        $query = self::$connection->prepare($sql);
         $query->bindParam(':username', $data['username']);
         $query->bindParam(':password', $data['password']);
         $query->bindParam(':email', $data['email']);
@@ -156,7 +156,7 @@ class Database
         }, array_keys($data)));
 
         $sql = "UPDATE {$this->table} SET $updateValues WHERE id = :id";
-        $query = $this->connection->prepare($sql);
+        $query = self::$connection->prepare($sql);
 
         foreach ($data as $key => $value) {
             $query->bindValue(':' . $key, $value);
@@ -173,7 +173,7 @@ class Database
         }
 
         $sql = 'DELETE FROM ' . $this->table . ' WHERE id = :id';
-        $query = $this->connection->prepare($sql);
+        $query = self::$connection->prepare($sql);
         $query->bindParam('id', $id);
         $query->execute();
 

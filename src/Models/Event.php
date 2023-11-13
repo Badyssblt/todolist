@@ -26,7 +26,7 @@ class Event extends Database
 
     public function checkEvent($data, $id)
     {
-        $this->getConnection();
+        self::getConnection();
         $this->edit($data, $id);
         $response =
             [

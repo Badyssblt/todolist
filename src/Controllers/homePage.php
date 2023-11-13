@@ -17,8 +17,6 @@ class homePage
     {
         $todo = new Todo();
         $lists = $todo->getUserTodo();
-        $friends = new Friends();
-        $friendsList = $friends->getFriends(3);
         $isAjaxRequest = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
         if ($isAjaxRequest) {
             header('Content-Type: application/json');

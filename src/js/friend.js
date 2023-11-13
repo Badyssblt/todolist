@@ -9,7 +9,8 @@ $(document).ready(() => {
       },
       dataType: "JSON",
       success: function (response) {
-        renderFriend(response);
+        renderFriendAccept(response);
+        renderFriendWaiting(response);
       },
       error: function (jqXHR) {
         console.log(jqXHR);
@@ -17,8 +18,6 @@ $(document).ready(() => {
     });
   }
   updateFriend(userID);
-  updateFriendWaiting(userID);
-
   // Accepter amis
   $(document).on("mouseup", ".add__friend", function (event) {
     event.stopPropagation();
@@ -41,7 +40,35 @@ $(document).ready(() => {
     });
   });
 
-  function renderFriend(data) {
+  function renderFriendAccept(data) {
+    $(".friends__wrapper").empty();
+    for (let i = 0; i < data["accepted"].length; i++) {
+      let item = `<div class="friend" data-friendID='${
+        data["accepted"][i].friend_id || data["accepted"][i].ID
+      }'>
+      <div class="friend__info">
+        <div class="img__container">
+          <img src="./images/user.png" alt="Image de l'utilisateur">
+        </div>
+        <div class="friend__info__name">
+        <p>
+          ${data["accepted"][i].friend_name || data["accepted"][i].username}
+        </p>
+        <p>
+          ${data["accepted"][i].is_online == 1 ? "En ligne" : "Hors ligne"}
+        </p>
+        </div>
+
+      </div>
+
+  </div>`;
+
+      $(".friends__wrapper").append(item);
+    }
+  }
+
+  function renderFriendSearch(data) {
+    console.log(data);
     $(".friends__wrapper").empty();
     for (let i = 0; i < data.length; i++) {
       let item = `<div class="friend" data-friendID='${
@@ -54,9 +81,6 @@ $(document).ready(() => {
         <div class="friend__info__name">
         <p>
           ${data[i].friend_name || data[i].username}
-        </p>
-        <p>
-          ${data[i].is_online == 1 ? "En ligne" : "Hors ligne"}
         </p>
         </div>
 
@@ -101,7 +125,8 @@ $(document).ready(() => {
         },
         dataType: "JSON",
         success: function (response) {
-          renderFriend(response);
+          console.log(response);
+          renderFriendSearch(response);
         },
         error: function (jqXHR) {
           console.log(jqXHR);
@@ -132,42 +157,24 @@ $(document).ready(() => {
   });
 });
 
-// GESTION DEMANDE D'AMIS
-function updateFriendWaiting(userID) {
-  $.ajax({
-    type: "POST",
-    url: "/getFriendsWaiting",
-    data: {
-      userID: userID,
-    },
-    dataType: "JSON",
-    success: function (response) {
-      renderFriendWaiting(response);
-    },
-    error: function (jqXHR) {
-      console.log(jqXHR);
-    },
-  });
-}
-
 function renderFriendWaiting(data) {
   $(".bell__menu").empty();
-  let numberOfWaiting = data.length;
+  let numberOfWaiting = data["pending"].length;
   $(".bell__notif").text(numberOfWaiting);
-  if (data.length == 0) {
+  if (data["pending"].length == 0) {
     const warning = $("<p class='warning__text'>Aucune demande d'ami</p>");
     $(".bell__menu").append(warning);
   }
-  for (let i = 0; i < data.length; i++) {
+  for (let i = 0; i < data["pending"].length; i++) {
     let item = `<div class="friend waiting" data-friendID='${
-      data[i].friend_id
+      data["pending"][i].friend_id
     }'>
     <div class="friend__info">
       <div class="img__container">
           <img src="./images/user.png" alt="Image de l'utilisateur">
       </div>
       <p>
-          ${data[i].friend_name || data[i].username}
+          ${data["pending"][i].friend_name || data["pending"][i].username}
       </p>
     </div>
     <div class='add__friend'><i class="fa-solid fa-plus"></i></div>

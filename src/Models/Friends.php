@@ -7,15 +7,16 @@ class Friends extends Database
 
     public $table = 'friends';
 
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
     }
 
     public function updateOnlineStatus($userID, $isOnline)
     {
-        $this->getConnection();
+        self::getConnection();
         $sql = "UPDATE users SET is_online = :is_online WHERE id = :user_id";
-        $query = $this->connection->prepare($sql);
+        $query = self::$connection->prepare($sql);
         $query->bindParam(":is_online", $isOnline, \PDO::PARAM_BOOL);
         $query->bindParam(":user_id", $userID, \PDO::PARAM_INT);
         $query->execute();
@@ -36,47 +37,12 @@ class Friends extends Database
     AND friends.state = :state
 ";
 
-        $this->getConnection();
+        self::getConnection();
         $result = $this->getByColumns($sql, $columns);
 
         return !empty($result);
     }
 
-    public function getFriends($userID)
-    {
-        $columns =
-            [
-                'user1' => $userID,
-                'user2' => $userID,
-                'state' => 2
-            ];
-        $sql = "SELECT friends.*, u1.id AS user1_id, u1.username AS user1_name, u2.id AS user2_id, u2.username AS user2_name, u1.is_online AS user1_online, u2.is_online AS user2_online
-            FROM friends
-            INNER JOIN users u1 ON friends.user1 = u1.id
-            INNER JOIN users u2 ON friends.user2 = u2.id
-            WHERE (friends.user1 = :user1 OR friends.user2 = :user2) AND friends.state = :state";
-
-        $this->getConnection();
-        $friends = $this->getByColumns($sql, $columns);
-        $output = [];
-        foreach ($friends as $row) {
-            $friendID = $row['user1'] == $columns['user1'] ? $row['user2_id'] : $row['user1_id'];
-            $friendName = $row['user1'] == $columns['user1'] ? $row['user2_name'] : $row['user1_name'];
-            $isOnlineColumn = $row['user1'] == $columns['user1'] ? 'user2_online' : 'user1_online';
-            $friendOnline = isset($row[$isOnlineColumn]) ? $row[$isOnlineColumn] : null;
-
-
-            $output[] = [
-                'id' => $row['id'],
-                'friend_name' => $friendName,
-                'state' => $row['state'],
-                'friend_id' => $friendID,
-                'is_online' => $friendOnline
-            ];
-        }
-
-        return $output;
-    }
 
     public function searchFriends($email)
     {
@@ -85,7 +51,7 @@ class Friends extends Database
             [
                 "email" => $email
             ];
-        $this->getConnection();
+        self::getConnection();
         $search = $this->getByColumns($sql, $columns);
         return $search;
     }
@@ -103,7 +69,7 @@ class Friends extends Database
     OR (friends.user1 = :user2 AND friends.user2 = :user1))
     AND friends.state = :state";
 
-        $this->getConnection();
+        self::getConnection();
         $result = $this->getByColumns($sql, $columns);
 
         return !empty($result);
@@ -123,7 +89,7 @@ class Friends extends Database
         if ($this->areFriends($userID, $friendID) || $this->isFriendRequestPending($userID, $friendID)) {
             return false;
         } else {
-            $this->getConnection();
+            self::getConnection();
             $req = $this->insertData($data);
             if ($req) {
                 return true;
@@ -135,42 +101,63 @@ class Friends extends Database
 
     }
 
-    public function getFriendsWaiting($userID)
+
+    public function getFriendsAndPending($userID)
     {
-        $columns = [
-            'user' => $userID,
-            'state' => 1
-        ];
-        $sql = "SELECT friends.*, u1.id AS user1_id, u1.username AS user1_name, u2.id AS user2_id, u2.username AS user2_name
-        FROM friends
-        INNER JOIN users u1 ON friends.user1 = u1.id
-        INNER JOIN users u2 ON friends.user2 = u2.id
-        WHERE (friends.user1 = :user OR friends.user2 = :user) AND friends.state = :state AND friends.requester != :user";
+        self::getConnection();
 
+        $sql = "SELECT 
+                friends.*,
+                u1.id AS user1_id, u1.username AS user1_name, u1.is_online AS user1_online,
+                u2.id AS user2_id, u2.username AS user2_name, u2.is_online AS user2_online
+            FROM friends
+            INNER JOIN users u1 ON friends.user1 = u1.id
+            INNER JOIN users u2 ON friends.user2 = u2.id
+            WHERE (friends.user1 = :userID OR friends.user2 = :userID) AND (friends.state = 1 OR friends.state = 2)";
 
+        $columns = ['userID' => $userID];
 
-        $this->getConnection();
-        $friends = $this->getByColumns($sql, $columns);
-        $output = [];
+        $query = self::$connection->prepare($sql);
+        $query->bindParam(':userID', $userID, \PDO::PARAM_INT);
+        $query->execute();
+        $friends = $query->fetchAll(\PDO::FETCH_ASSOC);
+
+        $outputAccepted = [];
+        $outputPending = [];
+
         foreach ($friends as $row) {
-            $friendID = $row['user1'] == $columns['user'] ? $row['user2_id'] : $row['user1_id'];
-            $friendName = $row['user1'] == $columns['user'] ? $row['user2_name'] : $row['user1_name'];
-            $output[] = [
+            $friendID = ($row['user1'] == $userID) ? $row['user2_id'] : $row['user1_id'];
+            $friendName = ($row['user1'] == $userID) ? $row['user2_name'] : $row['user1_name'];
+            $isOnlineColumn = ($row['user1'] == $userID) ? 'user2_online' : 'user1_online';
+            $friendOnline = isset($row[$isOnlineColumn]) ? $row[$isOnlineColumn] : null;
+
+            $friendData = [
                 'id' => $row['id'],
                 'friend_name' => $friendName,
                 'state' => $row['state'],
                 'friend_id' => $friendID,
+                'is_online' => $friendOnline
             ];
+
+            if ($row['state'] == 2) {
+                // Ami déjà accepté
+                $outputAccepted[] = $friendData;
+            } elseif ($row['state'] == 1) {
+                // Ami en attente
+                $outputPending[] = $friendData;
+            }
         }
 
-        return $output;
+        // Maintenant, vous avez deux tableaux distincts: $outputAccepted et $outputPending
+        return ['accepted' => $outputAccepted, 'pending' => $outputPending];
     }
+
 
     public function acceptFriend($userID, $friendID, $state)
     {
-        $this->getConnection();
+        self::getConnection();
         $sql = "UPDATE {$this->table} SET state = :state WHERE (user1 = :user1 OR user2 = :user1) AND (user1 = :user2 OR user2 = :user2)";
-        $query = $this->connection->prepare($sql);
+        $query = self::$connection->prepare($sql);
         $query->bindParam(":state", $state);
         $query->bindParam(":user1", $userID);
         $query->bindParam(":user2", $friendID);

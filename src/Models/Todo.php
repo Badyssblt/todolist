@@ -33,18 +33,18 @@ class Todo extends Database
         if ($_SESSION['ID']) {
             $userID = $_SESSION['ID'];
             $sql = 'SELECT todo.*, categorydefault.name AS categoryName FROM todo LEFT JOIN categorydefault ON todo.category = categorydefault.ID WHERE userID = :userID';
-            if($category !== null){
+            if ($category !== null) {
                 $sql .= ' AND todo.category = :category';
             }
-            if($name !== null){
+            if ($name !== null) {
                 $sql .= ' AND todo.name LIKE :name ';
             }
-            $query = $this->connection->prepare($sql);
+            $query = self::$connection->prepare($sql);
             $query->bindValue(':userID', $userID, \PDO::PARAM_INT);
             if ($category !== null) {
                 $query->bindValue(':category', $category, \PDO::PARAM_INT);
             }
-            
+
             if ($name !== null) {
                 $query->bindValue(':name', "%$name%", \PDO::PARAM_STR);
             }

@@ -17,7 +17,6 @@ $(document).ready(() => {
     });
   }
   updateFriend(userID);
-  updateFriendWaiting(userID);
 
   // Accepter amis
   $(document).on("mouseup", ".add__friend", function (event) {
@@ -76,31 +75,6 @@ $(document).ready(() => {
       addMenuOpen = true;
     }
   });
-
-  // AFFICHAGE RECHERCHE AMIS
-  $("#friend__name").change(function (e) {
-    e.preventDefault();
-    let email = $(this).val();
-    if (email == "") {
-      updateFriend(userID);
-    } else {
-      $.ajax({
-        type: "POST",
-        url: "/searchFriend",
-        data: {
-          email: email,
-        },
-        dataType: "JSON",
-        success: function (response) {
-          renderFriend(response);
-        },
-        error: function (jqXHR) {
-          console.log(jqXHR);
-        },
-      });
-    }
-  });
-
   // AJOUTER EN AMIS
   $(document).on("click", "#add__friend", function () {
     let friendID = $(this).closest(".friend").data("friendid");
@@ -122,24 +96,6 @@ $(document).ready(() => {
     });
   });
 });
-
-// GESTION DEMANDE D'AMIS
-function updateFriendWaiting(userID) {
-  $.ajax({
-    type: "POST",
-    url: "/getFriendsWaiting",
-    data: {
-      userID: userID,
-    },
-    dataType: "JSON",
-    success: function (response) {
-      renderFriendWaiting(response);
-    },
-    error: function (jqXHR) {
-      console.log(jqXHR);
-    },
-  });
-}
 
 function renderFriendWaiting(data) {
   $(".bell__menu").empty();

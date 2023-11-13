@@ -1,14 +1,6 @@
 <div class="friends__content">
     <div class="friends__top">
         <p><i class='fas fa-user'></i>Amis</p>
-        <div class="friends__top__bell">
-            <p><i class='fas fa-bell'></i></p>
-            <p class='bell__notif'></p>
-            <div class="bell__menu">
-
-            </div>
-        </div>
-
     </div>
     <div class="friends__wrapper">
     </div>
