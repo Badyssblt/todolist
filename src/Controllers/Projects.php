@@ -140,6 +140,38 @@ class Projects
         }
     }
 
+    public function deleteTodoInProject()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            $todoID = $_POST['todoID'];
+            $this->project->deleteTodoInProject($todoID);
+        }
+    }
+
+    public function check()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            $id = $_POST['id'];
+            $data =
+                [
+                    'state' => self::STATE_CHECK
+                ];
+            $this->project->checkEvent($data, $id);
+        }
+    }
+
+    public function uncheck()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            $id = $_POST['id'];
+            $data =
+                [
+                    'state' => self::STATE_UNCHECK
+                ];
+            $this->project->checkEvent($data, $id);
+        }
+    }
+
 
 
 }

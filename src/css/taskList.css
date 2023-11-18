@@ -2,6 +2,7 @@
     display: grid;
     grid-template-rows: repeat(2, auto);
     height: fit-content;
+    width: 100%;
 }
 
 .todo__top {
@@ -67,11 +68,12 @@
 
 .todo__items {
     width: 90%;
-    height: 80px;
+    min-height: 80px;
+    height: fit-content;
     position: relative;
     display: grid;
     grid-template-columns: 10% 62% 28%;
-    grid-template-rows: 80% 20%;
+    grid-template-rows: repeat(2, auto);
     padding: 10px;
     border-radius: 15px;
     font-family: var(--font-todo);
@@ -85,6 +87,7 @@
 }
 
 .todo__description {
+    height: fit-content;
     grid-column: 2;
 }
 
@@ -161,15 +164,17 @@
 }
 
 .addCategory {
+    display: flex;
+    flex-direction: column;
     z-index: 20;
-    width: 400px;
-    margin-top: 60px;
+    width: fit-content;
     height: fit-content;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: #212728;
+    background: var(--background-secondary);
+    border: 1px solid black;
     padding: 10px;
 }
 

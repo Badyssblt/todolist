@@ -1,14 +1,12 @@
 .friends__content {
     display: grid;
     grid-auto-rows: min-content;
-    justify-self: center;
-    margin-top: 150px;
+    justify-self: right;
+    height: 100%;
     font-family: Poppins;
     color: white;
-    width: 300px;
-    height: 500px;
+    width: 100%;
     background-color: var(--text-color);
-    border-radius: 18px;
 }
 
 .friends__top {

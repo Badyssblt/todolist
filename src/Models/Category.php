@@ -14,9 +14,10 @@ class Category extends Database
         $this->table = 'todo';
         $this->getConnection();
         $this->edit($data, $id);
+        var_dump($data);
         $response =
             [
-                "message" => "Categorie cree"
+                "message" => "Categorie cree",
             ];
         echo json_encode($response);
     }

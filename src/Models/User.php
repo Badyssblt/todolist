@@ -20,15 +20,27 @@ class User extends Database
         if ($res) {
             return $res;
         } else {
+            $verificationCode = md5(uniqid(rand(), true));
+
+            $data['verification_code'] = $verificationCode;
+
             $this->insert($data);
+            $root = "http://localhost:8080/verify/" . $verificationCode;
+            $to = $data['email'];
+            $subject = "Vérification de compte";
+            $message = "Merci de cliquer sur le lien suivant pour vérifier votre compte: $root";
+            $headers = "From: badyss.blt@gmail.com";
+
+            mail($to, $subject, $message, $headers);
+
             $response = [
-                "message" => "Inscription enregistrée",
-                "type" => "ok"
+                "message" => "Inscription enregistrée. Un e-mail de vérification a été envoyé.",
+                "type" => "verif"
             ];
             return $response;
         }
-
     }
+
 
     public function login($email, $password): bool
     {

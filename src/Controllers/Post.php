@@ -34,7 +34,10 @@ class Post
                     "name" => $_POST["name"],
                     "description" => $_POST["description"],
                     "userID" => $_SESSION['ID'],
-                    "date" => $_POST["data"]
+                    "date" => $_POST["data"],
+                    "state" => self::STATE_UNCHECK,
+                    "category" => 0,
+                    "orderTodo" => 0,
                 ];
             $event = new Event();
             $event->createEvent($data);

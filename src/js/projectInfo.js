@@ -34,6 +34,7 @@ $(document).ready(() => {
   updateUser();
 
   function renderUser(data) {
+    console.log(data);
     for (let i = 0; i < data.length; i++) {
       let item = data[i];
       let userName = item.ID == userID ? "Vous" : item.username;

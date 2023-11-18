@@ -14,7 +14,7 @@ class Event extends Database
 
     public function createEvent($data)
     {
-        $this->getConnection();
+        self::getConnection();
         $this->insertData($data);
         $response =
             [

@@ -112,8 +112,7 @@ $(document).ready(() => {
       if (data.length > 0 && data != null) {
         data.forEach(function (item) {
           var state = item.state == "1";
-          let color = item.color;
-          let textColor = isColorDark(color) ? "white" : "black";
+          let textColor = "black";
           var categoryHtml =
             item.categoryName !== null
               ? "<p>" + item.categoryName + "</p>"
@@ -126,7 +125,7 @@ $(document).ready(() => {
                                                               item.id
                                                             }' data-order='${
             item.orderTodo
-          }' style='background: ${color}; color: ${textColor}'>
+          }' style='background: 'white; color: ${textColor}'>
                                                                 <button class="btn__check ${
                                                                   state
                                                                     ? "check"
@@ -239,14 +238,18 @@ $(document).ready(() => {
     });
   });
 
+  let categoryID;
+  $(document).on("change", "#category", function () {
+    // Obtenir la valeur de l'option sélectionnée dans #category après le changement
+    categoryID = $(this).val();
+  });
   // Ajoute la catégorie à la todo
   $(document).on("submit", ".addCategory", function (e) {
     e.preventDefault();
-    let categoryID = $("#category").val();
     let todoID = $("#todoID").val();
     $.ajax({
       type: "POST",
-      url: "/addCategoryP",
+      url: "/addCategory",
       data: {
         categoryID: categoryID,
         todoID: todoID,
@@ -350,9 +353,14 @@ $(document).ready(() => {
 
 function createForm(data, classes) {
   const form = $("<form method='POST'>");
-  const submit = $('<input type="submit" value="Envoyer">');
+  const submit = $('<input type="submit" value="Ajouter">');
+  let close = $(
+    `<a class='form__close' onclick='hideFormCategory()'><i class='fa-solid fa-xmark'></i></a>`
+  );
+  let title = $("<p>Catégorie</p>");
   form.addClass(classes);
-
+  form.append(close);
+  form.append(title);
   for (let i = 0; i < data.length; i++) {
     let input = data[i];
     let field;
@@ -419,6 +427,7 @@ function defineCategory(todoID, clickedElement) {
       value: todoID,
     },
   ];
+
   $.ajax({
     type: "GET",
     url: "/getCategory",
@@ -434,7 +443,8 @@ function defineCategory(todoID, clickedElement) {
 
       $(".addCategory.form").remove();
       const form = createForm(formInputs, "addCategory");
-
+      $(".background-blur").show();
+      $("body").css("overflow", "hidden");
       $(clickedElement).after(form);
     },
     error: function (jqXHR) {
@@ -443,20 +453,20 @@ function defineCategory(todoID, clickedElement) {
   });
 }
 
+function hideFormCategory() {
+  $(".addCategory").css("display", "none");
+  $(".background-blur").hide();
+  $("body").css("overflow", "auto");
+}
+
 function hideForm() {
   $(".addTask").css("display", "none");
+  $(".background-blur").hide();
+  $("body").css("overflow", "auto");
 }
 
 function hideFormParameter() {
   $(".parameter").css("display", "none");
-}
-
-function isColorDark(hexColor) {
-  const r = parseInt(hexColor.slice(1, 3), 16);
-  const g = parseInt(hexColor.slice(3, 5), 16);
-  const b = parseInt(hexColor.slice(5, 7), 16);
-  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-  return luminance < 0.5;
 }
 
 // Ecouteur de clique
@@ -472,3 +482,32 @@ function gestionClicMasquage(elementProtected, divHidden) {
   });
 }
 gestionClicMasquage(".todo__parameter", ".parameter");
+
+$(document).on("click", function (e) {
+  const addCategory = $(".addCategory");
+  const addTask = $(".addTask");
+
+  // Vérifie si addCategory existe et n'est pas masqué
+  if (
+    addCategory.length &&
+    !addCategory.is(":hidden") &&
+    !$(e.target).is(".todo__category") &&
+    !$(e.target).closest(".addTask").length
+  ) {
+    addCategory.hide();
+    $(".background-blur").hide();
+    $("body").css("overflow", "auto");
+  }
+
+  // Vérifie si addTask existe et n'est pas masqué
+  if (
+    addTask.length &&
+    !addTask.is(":hidden") &&
+    !$(e.target).is("#addTaskButton") &&
+    !$(e.target).closest(".addTask").length
+  ) {
+    addTask.hide();
+    $(".background-blur").hide();
+    $("body").css("overflow", "auto");
+  }
+});

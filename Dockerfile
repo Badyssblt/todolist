@@ -5,6 +5,8 @@ RUN a2enmod rewrite
 WORKDIR /var/www/html
 
 COPY . /var/www/html
+COPY /usr/local/etc/php/php.ini /var/www/html/php.ini
+
 
 RUN apt-get update && \
     apt-get install -y \

@@ -115,6 +115,8 @@ function createsForm(date) {
   form.append(inputs.name);
   form.append(inputs.description);
   form.append(inputs.submit);
+  $(".background-blur").show();
+  $("body").css("overflow", "hidden");
   $(".addTask").append(form);
 }
 

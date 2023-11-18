@@ -343,5 +343,26 @@ class Project extends Database
         echo json_encode($response);
     }
 
+    public function deleteTodoInProject(int $todoID): void
+    {
+        self::getConnection();
+        $sql = "DELETE FROM " . $this->table . " WHERE id = :todoID";
+        $query = self::$connection->prepare($sql);
+        $query->bindParam(":todoID", $todoID);
+        $res = $query->execute();
+        if ($res) {
+            $response =
+                [
+                    "message" => "todo supprime",
+                ];
+        } else {
+            $response =
+                [
+                    "message" => "Erreur"
+                ];
+        }
+        echo json_encode($response);
+    }
+
 
 }

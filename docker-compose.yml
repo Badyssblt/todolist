@@ -30,3 +30,10 @@ services:
       PMA_PASSWORD: pass
     ports:
       - 8899:80
+  postfix:
+    image: catatnight/postfix
+    environment:
+      - ALLOWED_SENDER_DOMAINS=localhost
+      - ALLOWED_NETWORKS=127.0.0.1
+    ports:
+      - "25:25"

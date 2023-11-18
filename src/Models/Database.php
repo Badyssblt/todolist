@@ -142,6 +142,9 @@ class Database
         $query->bindParam(':password', $data['password']);
         $query->bindParam(':email', $data['email']);
 
+        if (array_key_exists('verification_code', $data)) {
+            $query->bindParam(':verification_code', $data['verification_code']);
+        }
         $query->execute();
     }
 

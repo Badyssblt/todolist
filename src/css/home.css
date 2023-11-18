@@ -2,7 +2,7 @@ main {
     width: 100%;
     min-height: 100vh;
     display: grid;
-    grid-template-columns: 20% 50% 30%;
+    grid-template-columns: 20% 60% 20%;
     background: var(--background-color);
 }
 

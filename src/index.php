@@ -15,6 +15,8 @@ $router = new Router();
 
 // Récupère l'URL 
 $path = $_SERVER["REQUEST_URI"];
+$path = strtok($path, '?');
+
 
 // Ajoute les routes au Router
 // FRONTEND
@@ -54,6 +56,9 @@ $router->addRoutes('/addUserInProject', [new Projects(), 'addUserInProject']);
 $router->addRoutes('/getProjectWaitingByUser', [new Projects(), 'getProjectWaitingByUser']);
 $router->addRoutes('/updateProjectWaiting', [new Projects(), "updateInvit"]);
 $router->addRoutes('/addCategoryProject', [new Projects(), "addCategoryProject"]);
+$router->addRoutes('/deleteTodoInProject', [new Projects(), "deleteTodoInProject"]);
+$router->addRoutes('/checkEventProject', [new Projects(), "check"]);
+$router->addRoutes('/uncheckEventProject', [new Projects(), "uncheck"]);
 
 // Gère l'URL avec $path et applique la méthode handleRequest
 $router->handleRequest($path);

@@ -34,6 +34,9 @@ if (!isset($_SESSION['ID'])) {
         <div class="form" style="display: none">
 
         </div>
+        <div class="background-blur">
+
+        </div>
         <?php require('./Vue/components/taskList.php') ?>
         <?php require('./Vue/components/friend.php') ?>
     </main>

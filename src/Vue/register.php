@@ -63,17 +63,24 @@
         });
 
         function renderResponse(data) {
+            if (data.type === "verif") {
+                let content = $(".errors__content");
+                content.empty();
+                let errors = data.message;
+                let errorsDiv = $(`<p class='warning__text'>${errors}</p>`);
+                content.append(errorsDiv);
+            }
             if (data.type === "cancel") {
                 let content = $(".errors__content");
                 content.empty();
                 let errors = data.message;
                 let errorsDiv = $(`<p class='warning__text'>${errors}</p>`);
                 content.append(errorsDiv);
-            } else if (data.type === "ok") {
-                window.location.href = '/login';
+                // } else if (data.type === "ok") {
+                //     window.location.href = '/login';
+                // }
             }
-        }
-    })
+        })
 </script>
 
 </html>

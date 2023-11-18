@@ -41,10 +41,11 @@ $(document).ready(() => {
   });
 
   function renderFriend(data) {
+    console.log(data.accepted);
     $(".friends__wrapper").empty();
-    for (let i = 0; i < data.length; i++) {
+    for (let i = 0; i < data.accepted.length; i++) {
       let item = `<div class="friend" data-friendID='${
-        data[i].friend_id || data[i].ID
+        data.accepted[i].friend_id || data.accepted[i].ID
       }'>
         <div class="friend__info">
           <div class="img__container">
@@ -52,7 +53,7 @@ $(document).ready(() => {
           </div>
           <div class="friend__info__name">
           <p>
-            ${data[i].friend_name || data[i].username}
+            ${data.accepted[i].friend_name || data.accepted[i].username}
           </p>
           </div>
   
