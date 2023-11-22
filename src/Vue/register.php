@@ -62,13 +62,36 @@
             });
         });
 
+        function redirect() {
+            let email = $("#email").val();
+            $.ajax({
+                type: "POST",
+                url: "/getToken",
+                data: {
+                    email: email,
+                },
+                dataType: "JSON",
+                success: function (response) {
+                    const token = response.token;
+                    window.location.href = '/verify?token=' + token;
+                },
+                error: function (jqXHR) {
+                    console.log(jqXHR);
+                },
+            });
+        }
+
+
         function renderResponse(data) {
             if (data.type === "verif") {
                 let content = $(".errors__content");
                 content.empty();
                 let errors = data.message;
                 let errorsDiv = $(`<p class='warning__text'>${errors}</p>`);
+                redirect();
+
                 content.append(errorsDiv);
+            } else if (data.type === "ok") {
             }
             if (data.type === "cancel") {
                 let content = $(".errors__content");
@@ -76,11 +99,9 @@
                 let errors = data.message;
                 let errorsDiv = $(`<p class='warning__text'>${errors}</p>`);
                 content.append(errorsDiv);
-                // } else if (data.type === "ok") {
-                //     window.location.href = '/login';
-                // }
             }
-        })
+        }
+    })
 </script>
 
 </html>

@@ -1,0 +1,36 @@
+main {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+#title {
+    font-family: Poppins;
+    font-weight: bold;
+}
+
+.input__code {
+    display: flex;
+    flex-direction: column;
+    width: 230px;
+    font-family: Poppins;
+}
+
+#code__label {
+    font-size: .8em;
+}
+
+#code {
+    width: 150px;
+    height: 40px;
+    border: none;
+    outline: none;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    font-family: Poppins;
+    font-size: 1.3em;
+}
+
+.warning__text {
+    font-family: Poppins;
+    color: black;
+}

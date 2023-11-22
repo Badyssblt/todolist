@@ -7,6 +7,7 @@ use Controllers\homePage;
 use Controllers\Router\Router;
 use Controllers\Post;
 use Controllers\Projects;
+use Controllers\VerifyController;
 
 require("../vendor/autoload.php");
 
@@ -26,6 +27,7 @@ $router->addRoutes('/login', [new Login(), "index"]);
 $router->addRoutes('/project', [new Projects(), "index"]);
 $router->addRoutes('/', [new homePage(), 'index']);
 $router->addRoutes('/project/{id}', [new ProjectPage(), "index"]);
+$router->addRoutes('/verify', [new VerifyController(), "index"]);
 
 
 // BACKEND
@@ -59,6 +61,8 @@ $router->addRoutes('/addCategoryProject', [new Projects(), "addCategoryProject"]
 $router->addRoutes('/deleteTodoInProject', [new Projects(), "deleteTodoInProject"]);
 $router->addRoutes('/checkEventProject', [new Projects(), "check"]);
 $router->addRoutes('/uncheckEventProject', [new Projects(), "uncheck"]);
+$router->addRoutes("/verifyCode", [new VerifyController(), "verifyCode"]);
+$router->addRoutes("/getToken", [new VerifyController(), "getToken"]);
 
 // Gère l'URL avec $path et applique la méthode handleRequest
 $router->handleRequest($path);

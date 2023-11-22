@@ -26,9 +26,7 @@ $(document).ready(() => {
       success: function (response) {
         renderUser(response);
       },
-      error: function (jqXHR) {
-        console.log(jqXHR);
-      },
+      error: function (jqXHR) {},
     });
   }
   updateUser();
