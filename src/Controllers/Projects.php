@@ -172,6 +172,15 @@ class Projects
         }
     }
 
+    public function deleteUserInProject()
+    {
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            $userID = $_POST['userID'];
+            $projectID = $_POST['projectID'];
+            $this->project->deleteUserInProject($userID, $projectID);
+        }
+    }
+
 
 
 }

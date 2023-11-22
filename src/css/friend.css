@@ -7,6 +7,8 @@
     color: white;
     width: 100%;
     background-color: var(--text-color);
+    padding-bottom: 20px;
+    border-radius: 20px;
 }
 
 .friends__top {

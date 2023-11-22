@@ -24,6 +24,8 @@
         </div>
         <input type="submit" value="Se connecter" class="submit">
     </form>
+    <script src="https://kit.fontawesome.com/c1cb64b22b.js" crossorigin="anonymous"></script>
+
 </body>
 
 </html>

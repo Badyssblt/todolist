@@ -41,7 +41,6 @@ $(document).ready(() => {
   });
 
   function renderFriend(data) {
-    console.log(data.accepted);
     $(".friends__wrapper").empty();
     for (let i = 0; i < data.accepted.length; i++) {
       let item = `<div class="friend" data-friendID='${
@@ -139,5 +138,24 @@ $(document).ready(() => {
 
   $(document).on("click", function () {
     bellMenu.hide();
+  });
+});
+$(document).ready(() => {
+  $(".participations__delete__accept").click(function () {
+    let participationID = $(
+      ".participation__wrapper .participation__item:last"
+    ).data("collabid");
+
+    console.log(participationID);
+    // $.ajax({
+    //   type: "POST",
+    //   url: "/deleteUserInProject",
+    //   data: {
+    //     userID: participationID,
+    //     projectID: projectID,
+    //   },
+    //   dataType: "dataType",
+    //   success: function (response) {},
+    // });
   });
 });

@@ -1,8 +1,9 @@
 <?php
-// Vérifie si l'utilisateur n'est pas connecter
 if (!isset($_SESSION['ID'])) {
     header('Location: /login');
 }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">

@@ -5,6 +5,7 @@ namespace Controllers;
 use Models\Category;
 use Models\Friends;
 use Models\Todo;
+use Models\User;
 
 class homePage
 {
@@ -15,14 +16,24 @@ class homePage
     }
     public function home()
     {
-        $todo = new Todo();
-        $lists = $todo->getUserTodo();
-        $isAjaxRequest = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
-        if ($isAjaxRequest) {
-            header('Content-Type: application/json');
-            echo json_encode($lists);
-            exit;
+        $user = new User();
+        if (isset($_SESSION)) {
+            if (isset($_SESSION['ID'])) {
+                $token = $_SESSION['token'];
+                $accountValidate = $user->accountValidate($token);
+            } else {
+                header("Location: /login");
+            }
+
+        } else {
+            session_start();
         }
-        require(dirname(__DIR__) . DIRECTORY_SEPARATOR . "Vue" . DIRECTORY_SEPARATOR . "home" . ".php");
+
+
+        if ($accountValidate) {
+            require(dirname(__DIR__) . DIRECTORY_SEPARATOR . "Vue" . DIRECTORY_SEPARATOR . "home" . ".php");
+        } else {
+            header("Location: /verify?token=$token");
+        }
     }
 }

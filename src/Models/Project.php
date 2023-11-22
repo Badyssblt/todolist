@@ -227,7 +227,9 @@ class Project extends Database
     {
         self::getConnection();
         $projectID = $_POST['projectID'];
-        $sql = "SELECT users.* FROM participation INNER JOIN users ON participation.userID = users.ID WHERE projectID = :projectID AND state = 1";
+        $sql = "SELECT users.* FROM participation 
+        INNER JOIN users ON participation.userID = users.ID 
+        WHERE participation.projectID = :projectID AND participation.state = 1";
         $query = self::$connection->prepare($sql);
         $query->bindParam(':projectID', $projectID, PDO::PARAM_INT);
         $query->execute();
@@ -363,6 +365,49 @@ class Project extends Database
         }
         echo json_encode($response);
     }
+
+    public function deleteUserInProject($userID, $projectID)
+    {
+        $isOwner = $this->isOwner($projectID);
+        if ($isOwner) {
+            $sql = "DELETE FROM participation WHERE userID = :userID AND projectID = :projectID";
+            $query = self::$connection->prepare($sql);
+            $query->bindParam(":userID", $userID);
+            $query->bindParam(":projectID", $projectID);
+            $res = $query->execute();
+            if ($res) {
+                $response =
+                    [
+                        "message" => "Utilisateur supprimé",
+                        "type" => "ok"
+                    ];
+            } else {
+                $response =
+                    [
+                        "message" => "Utilisateur non supprimé",
+                        "type" => "cancel"
+                    ];
+            }
+
+            echo json_encode($response);
+        }
+
+    }
+
+    public function isOwner($projectID)
+    {
+        $userID = $_SESSION['ID'];
+        $sql = "SELECT owner FROM projects WHERE owner = :userID AND projectID = :projectID";
+        $query = self::$connection->prepare($sql);
+        $query->bindParam(":userID", $userID);
+        $query->bindParam(":projectID", $projectID);
+        $query->execute();
+
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+
+        return !empty($result);
+    }
+
 
 
 }
