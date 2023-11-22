@@ -63,6 +63,7 @@ $router->addRoutes('/checkEventProject', [new Projects(), "check"]);
 $router->addRoutes('/uncheckEventProject', [new Projects(), "uncheck"]);
 $router->addRoutes("/verifyCode", [new VerifyController(), "verifyCode"]);
 $router->addRoutes("/getToken", [new VerifyController(), "getToken"]);
+$router->addRoutes("/deleteUserInProject", [new Projects(), "deleteUserInProject"]);
 
 // Gère l'URL avec $path et applique la méthode handleRequest
 $router->handleRequest($path);

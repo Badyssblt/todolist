@@ -48,6 +48,12 @@ $(document).ready(() => {
         </div>
       </div>
       <p class='project__more'><i class="fas fa-ellipsis-v" style="color: #ffffff;"></i></p>
+      <div class="participations__delete" data-collabid='${item.ID}'>
+        <p style='font-family: Poppins; font-weight: bold; font-size: .9em'>Voulez vous supprimer ce participant du
+            projet ?</p>
+        <button class='participations__delete__accept'>Supprimer</button>
+        <button class='participations__delete__denied'>Annuler</button>
+    </div>
   </div>`;
       $(".participation__wrapper").append(divItem);
     }
@@ -87,6 +93,7 @@ $(document).ready(() => {
   });
 });
 $(document).on("click", ".project__more", function () {
-  var deleteDiv = $(".participations__delete");
-  deleteDiv.toggle();
+  var parentItem = $(this).closest(".participations__item");
+
+  parentItem.find(".participations__delete").toggle();
 });

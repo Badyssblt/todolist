@@ -389,15 +389,23 @@ class Project extends Database
                     ];
             }
 
-            echo json_encode($response);
+
+        } else {
+            $response =
+                [
+                    "message" => "Vous n'êtes pas le propiétaire",
+                    "type" => "cancel"
+                ];
         }
+
+        echo json_encode($response);
 
     }
 
     public function isOwner($projectID)
     {
         $userID = $_SESSION['ID'];
-        $sql = "SELECT owner FROM projects WHERE owner = :userID AND projectID = :projectID";
+        $sql = "SELECT owner FROM projects WHERE owner = :userID AND ID = :projectID";
         $query = self::$connection->prepare($sql);
         $query->bindParam(":userID", $userID);
         $query->bindParam(":projectID", $projectID);

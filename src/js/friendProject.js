@@ -141,21 +141,27 @@ $(document).ready(() => {
   });
 });
 $(document).ready(() => {
-  $(".participations__delete__accept").click(function () {
-    let participationID = $(
-      ".participation__wrapper .participation__item:last"
-    ).data("collabid");
-
-    console.log(participationID);
-    // $.ajax({
-    //   type: "POST",
-    //   url: "/deleteUserInProject",
-    //   data: {
-    //     userID: participationID,
-    //     projectID: projectID,
-    //   },
-    //   dataType: "dataType",
-    //   success: function (response) {},
-    // });
+  $(document).on("click", ".participations__delete__accept", function () {
+    let participationDelete = $(this).closest(".participations__delete");
+    let participationID = $(this)
+      .closest(".participations__delete")
+      .attr("data-collabid");
+    let url = window.location.href;
+    let projectID = url.substring(url.lastIndexOf("/") + 1);
+    $.ajax({
+      type: "POST",
+      url: "/deleteUserInProject",
+      data: {
+        userID: participationID,
+        projectID: projectID,
+      },
+      dataType: "dataType",
+      success: function (response) {
+        participationDelete.hide();
+      },
+      error: function (jqXHR) {
+        participationDelete.hide();
+      },
+    });
   });
 });
