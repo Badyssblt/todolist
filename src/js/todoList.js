@@ -31,63 +31,6 @@ $(document).ready(() => {
       },
     });
   }
-  // Affiche les todo après le drag
-  function renderFilteredTodoList(filteredTodos) {
-    const todoWrapper = $(".todo__wrapper");
-    todoWrapper.empty();
-
-    if (filteredTodos != null) {
-      if (filteredTodos.length > 0) {
-        filteredTodos.forEach(function (item) {
-          var state = item.state === "1";
-          let color = item.color;
-          var categoryHtml =
-            item.categoryName !== null
-              ? "<p>" + item.categoryName + "</p>"
-              : '<p onclick="defineCategory(' +
-                item.id +
-                ', this)">Définir une catégorie</p>';
-          let textColor = isColorDark(color) ? "white" : "black";
-          let todoHtml = `<div class="todo__items" data-id='${
-            item.i
-          }' data-order='${
-            item.orderTodo
-          }' style='background: ${color}; color: ${textColor}'>
-                                                            <button class="btn__check ${
-                                                              state
-                                                                ? "check"
-                                                                : "uncheck"
-                                                            }" data-id='${
-            item.id
-          }'></button>
-                                                            <p class="todo__name">${
-                                                              item.name
-                                                            }</p>
-                                                            <div class="todo__category">${categoryHtml}</div>
-                                                            <div class="todo__description">
-                                                                <p class="todo__description todo__description__title hidden">Description : </p>
-                                                                <p class="todo__description hidden">${
-                                                                  item.description
-                                                                }</p>
-                                                            </div>
-                                                            <div class='todo__parameter'><i class='fas fa-gear'></i></div>
-                                                            <button class="btn__more">
-                                                                <i class="fas fa-angle-down close"></i>
-                                                            </button>
-                                                        </div>`;
-          todoWrapper.append(todoHtml);
-        });
-      } else {
-        todoWrapper.append(
-          '<p class="warning__text">Aucune tâche trouvée pour les critères spécifiés.</p>'
-        );
-      }
-    } else {
-      todoWrapper.append(
-        '<p class="warning__text">Une erreur s\'est produite lors de la récupération des tâches.</p>'
-      );
-    }
-  }
 
   // Initialise au chargement les todos de l'utilisateurs
   function updateTodoList() {
@@ -256,9 +199,11 @@ $(document).ready(() => {
       },
       success: function (response) {
         updateTodoList();
+        hideFormCategory();
       },
       error: function (jqXHR) {
         console.log(jqXHR);
+        hideFormCategory();
       },
     });
   });
